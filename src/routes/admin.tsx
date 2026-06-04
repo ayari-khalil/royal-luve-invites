@@ -25,18 +25,18 @@ const DEFAULT_WEDDING_PHOTO =
 
 function AdminDashboard() {
   const [auth, setAuth] = useState(false);
-  // const [user, setUser] = useState("");
-  // const [pwd, setPwd] = useState("");
+  const [user, setUser] = useState("");
+  const [pwd, setPwd] = useState("");
   const [err, setErr] = useState("");
   const [list, setList] = useState<Invitation[]>([]);
   const [loading, setLoading] = useState(true);  const [query, setQuery] = useState("");
   const [copied, setCopied] = useState<string | null>(null);
   const [editing, setEditing] = useState<Invitation | null>(null);
   const [creating, setCreating] = useState(false);
-  const userRef = useRef<HTMLInputElement>(null);
-  const pwdRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
+  if (!auth) return;
+
   async function loadInvitations() {
     try {
       setLoading(true);
@@ -50,77 +50,66 @@ function AdminDashboard() {
       const data = await res.json();
       setList(data);
     } catch (error) {
-      console.error(error);
-      alert("Impossible de charger les invitations depuis MongoDB.");
+      console.error("Erreur chargement invitations:", error);
+      setList([]);
     } finally {
       setLoading(false);
     }
   }
 
   loadInvitations();
-}, []);
+}, [auth]);
 
   if (!auth) {
-  return (
-    <div className="min-h-screen bg-noir flex items-center justify-center px-4">
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-
-          const username = userRef.current?.value.trim() || "";
-          const password = pwdRef.current?.value || "";
-
-          if (username === "admin" && password === "royal2026") {
-            setAuth(true);
-            setErr("");
-          } else {
-            setErr("Identifiants incorrects");
-          }
-        }}
-        className="glass-noir rounded-3xl p-10 w-full max-w-md text-center"
-      >
-        <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-[color:var(--gold)]/20 text-[color:var(--gold)] mb-4">
-          <Lock size={20} />
-        </div>
-
-        <h1 className="font-[family-name:var(--font-display)] tracking-widest text-gold-gradient text-xl">
-          ACCÈS ADMIN
-        </h1>
-
-        <p className="mt-2 text-sm text-white/60 font-[family-name:var(--font-serif)] italic">
-          Démo : admin / royal2026
-        </p>
-
-        <input
-          ref={userRef}
-          defaultValue=""
-          autoComplete="username"
-          placeholder="Identifiant"
-          className="mt-6 w-full px-4 py-3 rounded-xl bg-white/5 border border-[color:var(--gold)]/30 text-white placeholder:text-white/40 focus:outline-none focus:border-[color:var(--gold)]"
-        />
-
-        <input
-          ref={pwdRef}
-          type="password"
-          defaultValue=""
-          autoComplete="current-password"
-          placeholder="Mot de passe"
-          className="mt-3 w-full px-4 py-3 rounded-xl bg-white/5 border border-[color:var(--gold)]/30 text-white placeholder:text-white/40 focus:outline-none focus:border-[color:var(--gold)]"
-        />
-
-        {err && <p className="text-red-400 text-sm mt-3">{err}</p>}
-
-        <button type="submit" className="btn-royal w-full mt-6 py-3 rounded-xl">
-          Entrer
-        </button>
-
-        <Link to="/" className="block mt-4 text-xs text-white/50 tracking-widest uppercase">
-          ← Retour au site
-        </Link>
-      </form>
-    </div>
-  );
-}
+    return (
+      <div className="min-h-screen bg-noir flex items-center justify-center px-4">
+        <motion.form
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (user === "admin" && pwd === "royal2026") {
+              setAuth(true);
+              setErr("");
+            } else {
+              setErr("Identifiants incorrects");
+            }
+          }}
+          className="glass-noir rounded-3xl p-10 w-full max-w-md text-center"
+        >
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-[color:var(--gold)]/20 text-[color:var(--gold)] mb-4">
+            <Lock size={20} />
+          </div>
+          <h1 className="font-[family-name:var(--font-display)] tracking-widest text-gold-gradient text-xl">
+            ACCÈS ADMIN
+          </h1>
+          <p className="mt-2 text-sm text-white/60 font-[family-name:var(--font-serif)] italic">
+            Démo : admin / royal2026
+          </p>
+          <input
+            value={user}
+            onChange={(e) => setUser(e.target.value)}
+            placeholder="Identifiant"
+            className="mt-6 w-full px-4 py-3 rounded-xl bg-white/5 border border-[color:var(--gold)]/30 text-white placeholder:text-white/40 focus:outline-none focus:border-[color:var(--gold)]"
+          />
+          <input
+            type="password"
+            value={pwd}
+            onChange={(e) => setPwd(e.target.value)}
+            placeholder="Mot de passe"
+            className="mt-3 w-full px-4 py-3 rounded-xl bg-white/5 border border-[color:var(--gold)]/30 text-white placeholder:text-white/40 focus:outline-none focus:border-[color:var(--gold)]"
+          />
+          {err && <p className="text-red-400 text-sm mt-3">{err}</p>}
+          <button type="submit" className="btn-royal w-full mt-6 py-3 rounded-xl">
+            Entrer
+          </button>
+          <Link to="/" className="block mt-4 text-xs text-white/50 tracking-widest uppercase">
+            ← Retour au site
+          </Link>
+        </motion.form>
+      </div>
+    );
+  }
 
   const filtered = list.filter(
     (i) =>

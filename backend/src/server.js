@@ -8,11 +8,23 @@ dotenv.config();
 
 const app = express();
 
+const allowedOrigins = [
+  "http://localhost:8081",
+  "https://royal-luxe-invites.onrender.com",
+  process.env.CLIENT_URL,
+].filter(Boolean);
+
 app.use(
-    cors({
-        origin: process.env.CLIENT_URL || "http://localhost:8080",
-        credentials: true,
-    })
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error(`CORS blocked for origin: ${origin}`));
+      }
+    },
+    credentials: true,
+  })
 );
 
 app.use(express.json({ limit: "10mb" }));
