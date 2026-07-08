@@ -13,7 +13,7 @@ export const Route = createFileRoute("/templates")({
       {
         name: "description",
         content:
-          "Choisissez parmi nos modèles de faire-part de luxe : Royal Or, Noir & Émeraude, Jardin Rose.",
+          "Choisissez parmi nos modèles de faire-part de luxe : Royal Or, Noir & Émeraude, Jardin Rose, Velours Rouge.",
       },
       { property: "og:title", content: "Templates de faire-part de luxe" },
     ],

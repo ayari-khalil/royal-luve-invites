@@ -2,7 +2,7 @@ import { createFileRoute, notFound, useNavigate } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import { ChevronDown, Sparkles as SparkleIcon } from "lucide-react";
-import type { Invitation } from "@/data/invitations";
+import { invitations, type Invitation } from "@/data/invitations";
 import { FloatingPetals } from "@/components/FloatingPetals";
 import { Sparkles } from "@/components/Sparkles";
 import { Ornament } from "@/components/Ornament";
@@ -13,14 +13,21 @@ const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 export const Route = createFileRoute("/marriage/$slug")({
   loader: async ({ params }) => {
-    const res = await fetch(`${API_URL}/api/invitations/${params.slug}`);
-
-    if (!res.ok) {
-      throw notFound();
+    try {
+      const res = await fetch(`${API_URL}/api/invitations/${params.slug}`);
+      if (res.ok) {
+        return (await res.json()) as Invitation;
+      }
+    } catch (e) {
+      console.warn("Backend fetch failed, falling back to static data:", e);
     }
 
-    const inv = (await res.json()) as Invitation;
-    return inv;
+    const localInv = invitations.find((i) => i.slug === params.slug);
+    if (localInv) {
+      return localInv;
+    }
+
+    throw notFound();
   },
   head: ({ loaderData }) => ({
     meta: loaderData

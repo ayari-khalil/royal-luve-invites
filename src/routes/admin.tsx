@@ -24,12 +24,15 @@ const DEFAULT_WEDDING_PHOTO =
   "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop";
 
 function AdminDashboard() {
-  const [auth, setAuth] = useState(false);
-  const [user, setUser] = useState("");
-  const [pwd, setPwd] = useState("");
-  const [err, setErr] = useState("");
-  const [list, setList] = useState<Invitation[]>([]);
-  const [loading, setLoading] = useState(true);  const [query, setQuery] = useState("");
+const [auth, setAuth] = useState(false);
+const [err, setErr] = useState("");
+
+const userRef = useRef<HTMLInputElement>(null);
+const pwdRef = useRef<HTMLInputElement>(null);
+
+const [list, setList] = useState<Invitation[]>([]);
+const [loading, setLoading] = useState(false);
+const [query, setQuery] = useState("");
   const [copied, setCopied] = useState<string | null>(null);
   const [editing, setEditing] = useState<Invitation | null>(null);
   const [creating, setCreating] = useState(false);
@@ -61,55 +64,66 @@ function AdminDashboard() {
 }, [auth]);
 
   if (!auth) {
-    return (
-      <div className="min-h-screen bg-noir flex items-center justify-center px-4">
-        <motion.form
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          onSubmit={(e) => {
-            e.preventDefault();
-            if (user === "admin" && pwd === "royal2026") {
-              setAuth(true);
-              setErr("");
-            } else {
-              setErr("Identifiants incorrects");
-            }
-          }}
-          className="glass-noir rounded-3xl p-10 w-full max-w-md text-center"
-        >
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-[color:var(--gold)]/20 text-[color:var(--gold)] mb-4">
-            <Lock size={20} />
-          </div>
-          <h1 className="font-[family-name:var(--font-display)] tracking-widest text-gold-gradient text-xl">
-            ACCÈS ADMIN
-          </h1>
-          <p className="mt-2 text-sm text-white/60 font-[family-name:var(--font-serif)] italic">
-            Démo : admin / royal2026
-          </p>
-          <input
-            value={user}
-            onChange={(e) => setUser(e.target.value)}
-            placeholder="Identifiant"
-            className="mt-6 w-full px-4 py-3 rounded-xl bg-white/5 border border-[color:var(--gold)]/30 text-white placeholder:text-white/40 focus:outline-none focus:border-[color:var(--gold)]"
-          />
-          <input
-            type="password"
-            value={pwd}
-            onChange={(e) => setPwd(e.target.value)}
-            placeholder="Mot de passe"
-            className="mt-3 w-full px-4 py-3 rounded-xl bg-white/5 border border-[color:var(--gold)]/30 text-white placeholder:text-white/40 focus:outline-none focus:border-[color:var(--gold)]"
-          />
-          {err && <p className="text-red-400 text-sm mt-3">{err}</p>}
-          <button type="submit" className="btn-royal w-full mt-6 py-3 rounded-xl">
-            Entrer
-          </button>
-          <Link to="/" className="block mt-4 text-xs text-white/50 tracking-widest uppercase">
-            ← Retour au site
-          </Link>
-        </motion.form>
-      </div>
-    );
-  }
+  return (
+    <div className="min-h-screen bg-noir flex items-center justify-center px-4">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+
+          const formData = new FormData(e.currentTarget);
+          const username = String(formData.get("username") || "").trim();
+          const password = String(formData.get("password") || "");
+
+          if (username === "admin" && password === "royal2026") {
+            setAuth(true);
+            setErr("");
+          } else {
+            setErr("Identifiants incorrects");
+          }
+        }}
+        className="glass-noir rounded-3xl p-10 w-full max-w-md text-center"
+      >
+        <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-[color:var(--gold)]/20 text-[color:var(--gold)] mb-4">
+          <Lock size={20} />
+        </div>
+
+        <h1 className="font-[family-name:var(--font-display)] tracking-widest text-gold-gradient text-xl">
+          ACCÈS ADMIN
+        </h1>
+
+        <p className="mt-2 text-sm text-white/60 font-[family-name:var(--font-serif)] italic">
+          Démo : admin / royal2026
+        </p>
+
+        <input
+          name="username"
+          type="text"
+          autoComplete="username"
+          placeholder="Identifiant"
+          className="mt-6 w-full px-4 py-3 rounded-xl bg-white/5 border border-[color:var(--gold)]/30 text-white placeholder:text-white/40 focus:outline-none focus:border-[color:var(--gold)]"
+        />
+
+        <input
+          name="password"
+          type="password"
+          autoComplete="current-password"
+          placeholder="Mot de passe"
+          className="mt-3 w-full px-4 py-3 rounded-xl bg-white/5 border border-[color:var(--gold)]/30 text-white placeholder:text-white/40 focus:outline-none focus:border-[color:var(--gold)]"
+        />
+
+        {err && <p className="text-red-400 text-sm mt-3">{err}</p>}
+
+        <button type="submit" className="btn-royal w-full mt-6 py-3 rounded-xl">
+          Entrer
+        </button>
+
+        <Link to="/" className="block mt-4 text-xs text-white/50 tracking-widest uppercase">
+          ← Retour au site
+        </Link>
+      </form>
+    </div>
+  );
+}
 
   const filtered = list.filter(
     (i) =>
@@ -376,6 +390,18 @@ function InvitationForm({
   const set = <K extends keyof Invitation>(k: K, v: Invitation[K]) =>
     setForm((f) => ({ ...f, [k]: v }));
 
+  const [dateInputValue, setDateInputValue] = useState(() => {
+    if (!invitation.weddingDate) return "";
+    try {
+      const d = new Date(invitation.weddingDate);
+      if (!isNaN(d.getTime())) {
+        const tzOffset = d.getTimezoneOffset() * 60000;
+        return new Date(d.getTime() - tzOffset).toISOString().slice(0, 16);
+      }
+    } catch (e) {}
+    return invitation.weddingDate.slice(0, 16) || "";
+  });
+
   return (
     <div
       className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto"
@@ -408,10 +434,22 @@ function InvitationForm({
           <Field label="Date & heure">
             <input
               type="datetime-local"
-              value={form.weddingDate.slice(0, 16)}
-              onChange={(e) =>
-                set("weddingDate", new Date(e.target.value).toISOString())
-              }
+              value={dateInputValue}
+              onChange={(e) => {
+                const val = e.target.value;
+                setDateInputValue(val);
+                if (val) {
+                  const d = new Date(val);
+                  if (!isNaN(d.getTime())) {
+                    set("weddingDate", d.toISOString());
+                  }
+                }
+              }}
+              onClick={(e) => {
+                try {
+                  e.currentTarget.showPicker?.();
+                } catch (err) {}
+              }}
               className={inputCls}
             />
           </Field>

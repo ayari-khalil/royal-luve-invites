@@ -340,13 +340,13 @@
   @keyframes titleGlow {
     0%, 100% {
       text-shadow:
-        0 0 12px var(--glow-color, rgba(212,175,55,0.4)),
-        0 0 30px transparent;
+        0 0 2px var(--glow-color, rgba(212,175,55,0.25)),
+        0 0 4px transparent;
     }
     50% {
       text-shadow:
-        0 0 20px var(--glow-color, rgba(212,175,55,0.7)),
-        0 0 55px var(--glow-color, rgba(212,175,55,0.25));
+        0 0 4px var(--glow-color, rgba(212,175,55,0.4)),
+        0 0 8px var(--glow-color, rgba(212,175,55,0.15));
     }
   }
  

@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { Crown, Sparkles as SparkleIcon, Mail, ArrowRight, Palette } from "lucide-react";
+import { Crown, Sparkles as SparkleIcon, Mail, ArrowRight, Palette, Eye } from "lucide-react";
 import { invitations, TEMPLATES } from "@/data/invitations";
 import { Sparkles } from "@/components/Sparkles";
 import { FloatingPetals } from "@/components/FloatingPetals";
@@ -119,34 +119,55 @@ function Index() {
             Templates
           </p>
           <h2 className="mt-3 font-[family-name:var(--font-serif)] italic text-3xl md:text-5xl">
-            Trois univers d'exception
+            Quatre univers d'exception
           </h2>
           <Ornament className="w-40 h-7 mx-auto text-[color:var(--gold)] mt-4" />
         </div>
-        <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {TEMPLATES.map((t, i) => (
-            <motion.div
-              key={t.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.7 }}
-              className="glass-card rounded-3xl overflow-hidden"
-            >
-              <div
-                className="h-32"
-                style={{
-                  background: `linear-gradient(135deg, ${t.palette[0]}, ${t.palette[1]} 40%, ${t.palette[2]} 80%, ${t.palette[3]})`,
-                }}
-              />
-              <div className="p-6">
-                <h3 className="font-[family-name:var(--font-serif)] italic text-2xl text-gold-gradient">
-                  {t.name}
-                </h3>
-                <p className="mt-1 text-sm text-[color:var(--gold-deep)] italic">{t.tagline}</p>
-              </div>
-            </motion.div>
-          ))}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+          {TEMPLATES.map((t, i) => {
+            const demo = invitations.find((inv) => inv.template === t.id) ?? invitations[0];
+            return (
+              <motion.div
+                key={t.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.7 }}
+                className="glass-card rounded-3xl overflow-hidden flex flex-col h-full"
+              >
+                <div
+                  className="h-32"
+                  style={{
+                    background: `linear-gradient(135deg, ${t.palette[0]}, ${t.palette[1]} 40%, ${t.palette[2]} 80%, ${t.palette[3]})`,
+                  }}
+                />
+                <div className="p-6 flex-1 flex flex-col justify-between">
+                  <div>
+                    <h3 className="font-[family-name:var(--font-serif)] italic text-2xl text-gold-gradient">
+                      {t.name}
+                    </h3>
+                    <p className="mt-1 text-sm text-[color:var(--gold-deep)] italic">{t.tagline}</p>
+                  </div>
+                  <div className="mt-6 flex flex-col gap-2">
+                    <Link
+                      to="/marriage/$slug"
+                      params={{ slug: demo.slug }}
+                      className="btn-royal inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full text-xs"
+                    >
+                      <Eye size={14} /> Voir l'enveloppe
+                    </Link>
+                    <Link
+                      to="/invitation/$slug"
+                      params={{ slug: demo.slug }}
+                      className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full border border-[color:var(--gold)]/50 text-[color:var(--gold-deep)] hover:bg-[color:var(--gold)]/10 font-[family-name:var(--font-display)] tracking-widest text-xs"
+                    >
+                      Aperçu direct <ArrowRight size={14} />
+                    </Link>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
         <div className="text-center mt-10">
           <Link
