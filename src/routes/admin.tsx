@@ -500,12 +500,54 @@ function InvitationForm({
             />
           </Field>
           <Field label="Message" full>
-            <textarea
-              value={form.message}
-              onChange={(e) => set("message", e.target.value)}
-              rows={3}
-              className={inputCls}
-            />
+            <div className="flex flex-col gap-2">
+              <textarea
+                value={form.message}
+                onChange={(e) => set("message", e.target.value)}
+                rows={3.5}
+                placeholder="أدخل نص الدعوة هنا..."
+                className={inputCls}
+              />
+              <div className="flex flex-wrap gap-2 mt-1">
+                <span className="text-[10px] text-white/50 self-center">اقتراحات نصوص:</span>
+                <button
+                  type="button"
+                  onClick={() =>
+                    set(
+                      "message",
+                      "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ. «وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً». بقلوب ملؤها المحبة والسرور، يشرفنا دعوتكم لحضور حفل زفافنا ومشاركتنا فرحة العمر. حضوركم يكتمل به بهاؤنا."
+                    )
+                  }
+                  className="px-2.5 py-1 text-xs rounded-full bg-[color:var(--gold)]/10 hover:bg-[color:var(--gold)]/25 text-[color:var(--gold)] border border-[color:var(--gold)]/20 transition-colors cursor-pointer"
+                >
+                  🕌 دعاء إسلامي
+                </button>
+                <button
+                  type="button"
+                  onClick={() =>
+                    set(
+                      "message",
+                      "في ليلة من ليالي العمر، نسجنا فيها الحب خيوطاً من ذهب، يسعدنا أن تشاركونا فرحتنا الكبرى وتكونوا شهوداً على بداية رباطنا المقدس وحياتنا المشتركة. ننتظركم بكل حب وشوق."
+                    )
+                  }
+                  className="px-2.5 py-1 text-xs rounded-full bg-[color:var(--gold)]/10 hover:bg-[color:var(--gold)]/25 text-[color:var(--gold)] border border-[color:var(--gold)]/20 transition-colors cursor-pointer"
+                >
+                  💖 رومانسية
+                </button>
+                <button
+                  type="button"
+                  onClick={() =>
+                    set(
+                      "message",
+                      "على أنغام المألوف التونسي الفواح وبأريج الياسمين والورد، نتشرف بدعوتكم لمشاركتنا ليلة العمر والاحتفال بقراننا المبارك في أجواء من البهجة والسرور. حضوركم يبهجنا ويسعدنا."
+                    )
+                  }
+                  className="px-2.5 py-1 text-xs rounded-full bg-[color:var(--gold)]/10 hover:bg-[color:var(--gold)]/25 text-[color:var(--gold)] border border-[color:var(--gold)]/20 transition-colors cursor-pointer"
+                >
+                  🌹 تونسي تقليدي
+                </button>
+              </div>
+            </div>
           </Field>
           <Field label="Template" full>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">

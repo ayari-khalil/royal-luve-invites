@@ -4,10 +4,10 @@ import { useCountdown } from "@/hooks/useCountdown";
 export function CountdownSection({ date }: { date: string }) {
   const { days, hours, minutes, seconds } = useCountdown(date);
   const items = [
-    { label: "Jours", value: days },
-    { label: "Heures", value: hours },
-    { label: "Minutes", value: minutes },
-    { label: "Secondes", value: seconds },
+    { label: "أيام", value: days },
+    { label: "ساعات", value: hours },
+    { label: "دقائق", value: minutes },
+    { label: "ثواني", value: seconds },
   ];
 
   return (

@@ -233,8 +233,8 @@ function CurtainStage({
         animate={{ opacity: open ? 0 : 1 }}
         transition={{ duration: reduceMotion ? 0 : 0.8 }}
       >
-        <p className="text-[10px] md:text-xs tracking-[0.7em] uppercase text-[#f0d78c] font-[family-name:var(--font-display)] curtain-text-glow">
-          Lever de rideau
+        <p className="text-[10px] md:text-xs tracking-[0.2em] uppercase text-[#f0d78c] font-[family-name:var(--font-display)] curtain-text-glow">
+          بداية المراسم
         </p>
         <SparkleIcon className="mt-4 text-[#d4af37]" size={18} />
       </motion.div>
@@ -271,10 +271,10 @@ function getGoogleMapsOpenUrl(inv: {
 function Countdown({ date }: { date: string }) {
   const { days, hours, minutes, seconds } = useCountdown(date);
   const items = [
-    { l: "Jours", v: days },
-    { l: "Heures", v: hours },
-    { l: "Minutes", v: minutes },
-    { l: "Secondes", v: seconds },
+    { l: "أيام", v: days },
+    { l: "ساعات", v: hours },
+    { l: "دقائق", v: minutes },
+    { l: "ثواني", v: seconds },
   ];
   return (
     <StaggerChildren className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-3xl mx-auto">
@@ -287,7 +287,7 @@ function Countdown({ date }: { date: string }) {
           <div className="font-[family-name:var(--font-display)] text-4xl md:text-6xl text-champagne-gradient leading-none tabular-nums">
             {String(it.v).padStart(2, "0")}
           </div>
-          <div className="mt-2 text-xs md:text-sm tracking-[0.3em] uppercase text-[#f0d78c]/70 font-[family-name:var(--font-serif)]">
+          <div className="mt-2 text-xs md:text-sm tracking-[0.1em] uppercase text-[#f0d78c]/70 font-[family-name:var(--font-serif)]">
             {it.l}
           </div>
         </motion.div>
@@ -311,13 +311,13 @@ export function VeloursRougeTemplate({ inv }: { inv: Invitation }) {
   }, [reduceMotion]);
 
   const dateObj = new Date(inv.weddingDate);
-  const dateLabel = dateObj.toLocaleDateString("fr-FR", {
+  const dateLabel = dateObj.toLocaleDateString("ar-TN", {
     weekday: "long",
     day: "numeric",
     month: "long",
     year: "numeric",
   });
-  const timeLabel = dateObj.toLocaleTimeString("fr-FR", {
+  const timeLabel = dateObj.toLocaleTimeString("ar-TN", {
     hour: "2-digit",
     minute: "2-digit",
   });
@@ -330,7 +330,7 @@ export function VeloursRougeTemplate({ inv }: { inv: Invitation }) {
   });
 
   return (
-    <div className="relative min-h-screen bg-velours text-[#f3e6ce] overflow-x-hidden">
+    <div dir="rtl" className="relative min-h-screen bg-velours text-[#f3e6ce] overflow-x-hidden">
       <style>{`
         .bg-velours {
           background:
@@ -389,9 +389,9 @@ export function VeloursRougeTemplate({ inv }: { inv: Invitation }) {
 
             <motion.p
               {...reveal(1.3)}
-              className="relative z-10 text-[10px] md:text-xs tracking-[0.6em] uppercase text-[#d4af37] font-[family-name:var(--font-display)] mb-6"
+              className="relative z-10 text-[10px] md:text-xs tracking-[0.2em] uppercase text-[#d4af37] font-[family-name:var(--font-display)] mb-6"
             >
-              ❖ Première d'une vie à deux ❖
+              ❖ بداية حياة مشتركة سعيدة ❖
             </motion.p>
 
             {/* Monogram medallion */}
@@ -416,18 +416,18 @@ export function VeloursRougeTemplate({ inv }: { inv: Invitation }) {
               className="relative z-10 font-[family-name:var(--font-script)] text-5xl md:text-8xl text-champagne-gradient leading-[1.05]"
             >
               <TitleGlow color="rgba(212,175,55,0.55)">{inv.brideName}</TitleGlow>
-              <span className="block text-2xl md:text-4xl my-3 text-[#8a1d38] font-[family-name:var(--font-display)] tracking-[0.4em]">
-                ❖ & ❖
+              <span className="block text-2xl md:text-4xl my-3 text-[#8a1d38] font-[family-name:var(--font-display)] tracking-[0.2em]">
+                ❖ و ❖
               </span>
               <TitleGlow color="rgba(212,175,55,0.55)">{inv.groomName}</TitleGlow>
             </motion.h1>
 
             <motion.div {...reveal(2.1)} className="relative z-10">
               <AnimatedDivider color="#d4af37" width="120px" className="my-8" />
-              <p className="font-[family-name:var(--font-serif)] italic text-lg md:text-xl text-[#f3e6ce]/85 capitalize">
+              <p className="font-[family-name:var(--font-serif)] text-lg md:text-xl text-[#f3e6ce]/85 capitalize">
                 {dateLabel}
               </p>
-              <p className="mt-2 font-[family-name:var(--font-display)] tracking-[0.4em] text-sm text-[#d4af37]">
+              <p className="mt-2 font-[family-name:var(--font-display)] tracking-wider text-sm text-[#d4af37]">
                 {timeLabel} — {inv.venue}
               </p>
             </motion.div>
@@ -454,13 +454,13 @@ export function VeloursRougeTemplate({ inv }: { inv: Invitation }) {
 
       {/* ── COUNTDOWN ────────────────────────────────────────────────────── */}
       <section className="relative px-4 py-20">
-        <Title eyebrow="Compte à rebours" title="Avant les trois coups" />
+        <Title eyebrow="العد التنازلي" title="في انتظار دقة البدء" />
         <Countdown date={inv.weddingDate} />
       </section>
 
       {/* ── PHOTO ────────────────────────────────────────────────────────── */}
       <section className="relative px-4 py-20">
-        <Title eyebrow="Nos deux rôles" title="Une seule histoire" />
+        <Title eyebrow="حكايتنا" title="قلبان ودرب واحد" />
         <ScrollReveal>
           <HoverLift scale={1.01}>
             <div className="max-w-3xl mx-auto relative">
@@ -475,8 +475,8 @@ export function VeloursRougeTemplate({ inv }: { inv: Invitation }) {
                 <div className="absolute inset-4 rounded-[1.5rem] border border-[#d4af37]/30 pointer-events-none" />
                 <div className="absolute bottom-8 left-0 right-0 text-center">
                   <TitleGlow color="rgba(212,175,55,0.6)">
-                    <p className="font-[family-name:var(--font-script)] text-3xl md:text-5xl text-champagne-gradient">
-                      {inv.brideName} & {inv.groomName}
+                    <p className="font-[family-name:var(--font-serif)] text-2xl md:text-4xl text-champagne-gradient">
+                      {inv.brideName} و {inv.groomName}
                     </p>
                   </TitleGlow>
                 </div>
@@ -488,7 +488,7 @@ export function VeloursRougeTemplate({ inv }: { inv: Invitation }) {
 
       {/* ── VENUE ────────────────────────────────────────────────────────── */}
       <section className="relative px-4 py-20">
-        <Title eyebrow="La scène" title="Le lieu de la célébration" />
+        <Title eyebrow="مكان الاحتفال" title="قاعة زفافنا" />
         <ScrollReveal delay={0.1}>
           <HoverLift>
             <div className="glass-velvet max-w-3xl mx-auto rounded-3xl p-10 text-center">
@@ -516,7 +516,7 @@ export function VeloursRougeTemplate({ inv }: { inv: Invitation }) {
 
       {/* ── MAP ──────────────────────────────────────────────────────────── */}
       <section className="relative px-4 py-20">
-        <Title eyebrow="Itinéraire" title="Rejoignez-nous" />
+        <Title eyebrow="خريطة الموقع" title="شاركونا هذه الليلة الاستثنائية" />
         {(() => {
           const embedUrl = getGoogleMapsEmbedUrl(inv);
           const openUrl = getGoogleMapsOpenUrl(inv);
@@ -561,9 +561,9 @@ export function VeloursRougeTemplate({ inv }: { inv: Invitation }) {
                     href={openUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 text-[#d4af37] hover:text-[#f0d78c] font-[family-name:var(--font-display)] tracking-widest text-sm transition-colors duration-300"
+                    className="inline-flex items-center gap-2 text-[#d4af37] hover:text-[#f0d78c] font-[family-name:var(--font-display)] tracking-wider text-sm transition-colors duration-300 cursor-pointer"
                   >
-                    <MapPin size={16} /> Ouvrir dans Maps
+                    <MapPin size={16} /> الموقع على الخريطة
                   </a>
                 </div>
               )}
@@ -575,21 +575,21 @@ export function VeloursRougeTemplate({ inv }: { inv: Invitation }) {
       {/* ── RSVP ─────────────────────────────────────────────────────────── */}
       <section className="relative px-4 py-24 text-center">
         <FloatingHearts count={8} palette="gold" />
-        <Title eyebrow="RSVP" title="Réservez votre place" />
+        <Title eyebrow="تأكيد الحضور" title="بانتظار تشريفكم لنا" />
         <ScrollReveal delay={0.2}>
-          <p className="max-w-xl mx-auto text-[#f3e6ce]/70 font-[family-name:var(--font-serif)] italic mb-8">
-            Le rideau se lèvera bientôt. Confirmez votre présence pour assister à la plus belle des premières.
+          <p className="max-w-xl mx-auto text-[#f3e6ce]/70 font-[family-name:var(--font-serif)] mb-8">
+            سترفع الستار قريباً. نرجو تأكيد حضوركم لتشهدوا معنا أجمل فصول العمر.
           </p>
           <motion.a
-            href={`https://wa.me/${inv.whatsappNumber}?text=${encodeURIComponent(`Bonjour, je confirme ma présence au mariage de ${inv.brideName} & ${inv.groomName}.`)}`}
+            href={`https://wa.me/${inv.whatsappNumber}?text=${encodeURIComponent(`السلام عليكم، أؤكد حضوري لحفل زفاف ${inv.brideName} و ${inv.groomName}.`)}`}
             target="_blank"
             rel="noreferrer"
-            className="btn-velours inline-flex items-center gap-3 px-9 py-4 rounded-full text-sm md:text-base transition-shadow duration-300"
+            className="btn-velours inline-flex items-center gap-3 px-9 py-4 rounded-full text-sm md:text-base transition-shadow duration-300 cursor-pointer"
             whileHover={{ scale: 1.04, y: -2 }}
             whileTap={{ scale: 0.98 }}
             transition={{ duration: 0.25 }}
           >
-            <MessageCircle size={18} /> Confirmer sur WhatsApp
+            <MessageCircle size={18} /> تأكيد الحضور عبر واتساب
           </motion.a>
         </ScrollReveal>
       </section>
@@ -600,11 +600,11 @@ export function VeloursRougeTemplate({ inv }: { inv: Invitation }) {
         <ScrollReveal delay={0.1}>
           <TitleGlow color="rgba(212,175,55,0.5)">
             <p className="mt-6 font-[family-name:var(--font-script)] text-3xl text-champagne-gradient">
-              Le rideau tombe, l'amour reste
+              يسدل الستار، ويبقى الحب خالداً
             </p>
           </TitleGlow>
-          <p className="mt-3 text-xs tracking-[0.5em] uppercase text-[#d4af37]/60 font-[family-name:var(--font-display)]">
-            ❖ {inv.brideName} & {inv.groomName} ❖
+          <p className="mt-3 text-xs tracking-[0.2em] uppercase text-[#d4af37]/60 font-[family-name:var(--font-display)]">
+            ❖ {inv.brideName} و {inv.groomName} ❖
           </p>
         </ScrollReveal>
       </footer>

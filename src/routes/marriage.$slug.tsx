@@ -50,7 +50,7 @@ function EnvelopePage() {
   const navigate = useNavigate();
   const [opened, setOpened] = useState(false);
   const [exiting, setExiting] = useState(false);
-  const initials = `${inv.brideName[0]}${inv.groomName[0]}`;
+  const initials = `${inv.brideName[0]} و ${inv.groomName[0]}`;
 
   useEffect(() => {
     if (!opened) return;
@@ -65,7 +65,7 @@ function EnvelopePage() {
   }, [opened, navigate, inv.slug]);
 
   return (
-    <div className="relative min-h-screen bg-royal overflow-hidden flex flex-col items-center justify-center px-6">
+    <div dir="rtl" className="relative min-h-screen bg-royal overflow-hidden flex flex-col items-center justify-center px-6">
       <FloatingPetals count={14} />
       <Sparkles count={50} />
 
@@ -82,9 +82,9 @@ function EnvelopePage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1 }}
-              className="text-xs md:text-sm tracking-[0.6em] uppercase text-[color:var(--gold-deep)] font-[family-name:var(--font-display)] mb-3"
+              className="text-xs md:text-sm tracking-[0.3em] uppercase text-[color:var(--gold-deep)] font-[family-name:var(--font-display)] mb-3"
             >
-              ⊹ Vous êtes invités ⊹
+              ⊹ بطاقة دعوة خاصة ⊹
             </motion.p>
 
             <motion.h2
@@ -93,7 +93,7 @@ function EnvelopePage() {
               transition={{ delay: 0.3, duration: 1 }}
               className="font-[family-name:var(--font-script)] text-5xl md:text-7xl shimmer-text mb-2"
             >
-              {inv.brideName} &amp; {inv.groomName}
+              {inv.brideName} و {inv.groomName}
             </motion.h2>
 
             <motion.div
@@ -129,13 +129,13 @@ function EnvelopePage() {
                     onClick={() => setOpened(true)}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.97 }}
-                    className="btn-royal inline-flex items-center gap-3 px-8 py-4 rounded-full text-sm"
+                    className="btn-royal inline-flex items-center gap-3 px-8 py-4 rounded-full text-sm cursor-pointer"
                   >
-                    <SparkleIcon size={16} /> Toucher pour ouvrir
+                    <SparkleIcon size={16} /> اضغط لفتح المظروف
                   </motion.button>
                   <ChevronDown className="text-[color:var(--gold-deep)] bounce-arrow" size={22} />
-                  <p className="text-[10px] tracking-[0.5em] uppercase text-muted-foreground font-[family-name:var(--font-display)]">
-                    Une surprise vous attend
+                  <p className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground font-[family-name:var(--font-display)]">
+                    في انتظاركم مفاجأة سارة
                   </p>
                 </motion.div>
               )}
@@ -162,7 +162,7 @@ function EnvelopePage() {
             >
               <Ornament className="w-56 h-10 mx-auto text-[color:var(--gold)]" />
               <p className="mt-4 font-[family-name:var(--font-script)] text-5xl text-gold-gradient">
-                Bienvenue
+                أهلاً ومرحباً بكم
               </p>
             </motion.div>
           </motion.div>
@@ -188,7 +188,7 @@ function BigEnvelope({
       whileTap={{ scale: 0.98 }}
       className={`relative w-[350px] h-[235px] md:w-[540px] md:h-[350px] cursor-pointer focus:outline-none ${opened ? "" : "envelope-breathe"
         }`}
-      aria-label="Ouvrir l'invitation"
+      aria-label="فتح بطاقة الدعوة"
       style={{ perspective: 1400 }}
     >
       {/* premium glow */}
@@ -231,12 +231,12 @@ function BigEnvelope({
           }}
         />
 
-        <p className="text-[9px] md:text-[10px] tracking-[0.55em] uppercase text-[color:var(--gold-deep)] font-[family-name:var(--font-display)]">
-          Invitation Privée
+        <p className="text-[9px] md:text-[10px] tracking-[0.2em] uppercase text-[color:var(--gold-deep)] font-[family-name:var(--font-display)]">
+          دعوة خاصة
         </p>
 
-        <span className="font-[family-name:var(--font-script)] text-5xl md:text-7xl text-gold-gradient mt-3">
-          {initials[0]} &amp; {initials[1]}
+        <span className="font-[family-name:var(--font-script)] text-3xl md:text-5xl text-gold-gradient mt-3">
+          {initials}
         </span>
 
         <Ornament className="w-32 h-6 text-[color:var(--gold)] mt-3" />

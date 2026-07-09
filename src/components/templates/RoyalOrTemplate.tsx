@@ -45,19 +45,19 @@ function getGoogleMapsOpenUrl(inv: {
 
 export function RoyalOrTemplate({ inv }: { inv: Invitation }) {
   const dateObj = new Date(inv.weddingDate);
-  const dateLabel = dateObj.toLocaleDateString("fr-FR", {
+  const dateLabel = dateObj.toLocaleDateString("ar-TN", {
     weekday: "long",
     day: "numeric",
     month: "long",
     year: "numeric",
   });
-  const timeLabel = dateObj.toLocaleTimeString("fr-FR", {
+  const timeLabel = dateObj.toLocaleTimeString("ar-TN", {
     hour: "2-digit",
     minute: "2-digit",
   });
 
   return (
-    <div className="relative min-h-screen bg-royal text-foreground overflow-x-hidden">
+    <div dir="rtl" className="relative min-h-screen bg-royal text-foreground overflow-x-hidden">
       {/* Original petal layer kept — enhanced petals added below */}
       <FloatingPetals />
 
@@ -89,21 +89,21 @@ export function RoyalOrTemplate({ inv }: { inv: Invitation }) {
             <Ornament className="w-40 h-7 text-[color:var(--gold)] relative z-10" />
           </div>
 
-          <p className="tracking-[0.4em] uppercase text-xs text-[color:var(--gold-deep)] font-[family-name:var(--font-display)]">
-            Mariage
+          <p className="tracking-[0.2em] uppercase text-xs text-[color:var(--gold-deep)] font-[family-name:var(--font-display)]">
+            حفل زفاف
           </p>
 
           <h1 className="mt-6 font-[family-name:var(--font-script)] text-5xl md:text-7xl text-gold-gradient leading-tight">
             <TitleGlow color="rgba(212,175,55,0.5)">{inv.brideName}</TitleGlow>
           </h1>
-          <p className="my-2 text-2xl text-[color:var(--gold)] font-[family-name:var(--font-serif)] italic">&</p>
+          <p className="my-2 text-2xl text-[color:var(--gold)] font-[family-name:var(--font-serif)] italic">و</p>
           <h1 className="font-[family-name:var(--font-script)] text-5xl md:text-7xl text-gold-gradient leading-tight">
             <TitleGlow color="rgba(212,175,55,0.5)">{inv.groomName}</TitleGlow>
           </h1>
 
           <Ornament className="w-40 h-7 mx-auto text-[color:var(--gold)] my-8" />
 
-          <p className="font-[family-name:var(--font-serif)] italic text-lg md:text-xl text-muted-foreground leading-relaxed">
+          <p className="font-[family-name:var(--font-serif)] text-lg md:text-xl text-muted-foreground leading-relaxed">
             {inv.message}
           </p>
 
@@ -115,7 +115,7 @@ export function RoyalOrTemplate({ inv }: { inv: Invitation }) {
               <span className="font-[family-name:var(--font-serif)] capitalize">{dateLabel}</span>
             </div>
             <span className="hidden md:inline text-[color:var(--gold)]">•</span>
-            <div className="font-[family-name:var(--font-display)] tracking-widest text-[color:var(--gold-deep)]">
+            <div className="font-[family-name:var(--font-display)] tracking-wider text-[color:var(--gold-deep)]">
               {timeLabel}
             </div>
           </div>
@@ -124,27 +124,27 @@ export function RoyalOrTemplate({ inv }: { inv: Invitation }) {
 
       {/* ── COUNTDOWN ────────────────────────────────────────────────────── */}
       <section className="px-4 py-20">
-        <SectionTitle eyebrow="Compte à rebours" title="Avant le grand jour" />
+        <SectionTitle eyebrow="العد التنازلي" title="على أعتاب ليلة العمر" />
         <CountdownSection date={inv.weddingDate} />
       </section>
 
       {/* ── PHOTO ────────────────────────────────────────────────────────── */}
       <section className="px-4 py-20">
-        <SectionTitle eyebrow="Notre histoire" title="Deux âmes, une promesse" />
+        <SectionTitle eyebrow="قصة حبنا" title="روحان يجمعهما ميثاق غليظ" />
         <ScrollReveal>
           <HoverLift scale={1.01}>
             <div className="max-w-3xl mx-auto">
               <div className="relative rounded-3xl overflow-hidden shadow-elegant border border-[color:var(--gold)]/40 img-vignette">
                 <img
                   src={inv.photoUrl || DEFAULT_WEDDING_PHOTO}
-                  alt={`${inv.brideName} & ${inv.groomName}`}
+                  alt={`${inv.brideName} و ${inv.groomName}`}
                   className="w-full h-[480px] object-cover transition-transform duration-700 hover:scale-[1.03]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6 text-white text-center">
                   <TitleGlow color="rgba(212,175,55,0.5)">
-                    <span className="font-[family-name:var(--font-script)] text-3xl md:text-5xl">
-                      {inv.brideName} & {inv.groomName}
+                    <span className="font-[family-name:var(--font-serif)] text-2xl md:text-4xl">
+                      {inv.brideName} و {inv.groomName}
                     </span>
                   </TitleGlow>
                 </div>
@@ -156,7 +156,7 @@ export function RoyalOrTemplate({ inv }: { inv: Invitation }) {
 
       {/* ── VENUE ────────────────────────────────────────────────────────── */}
       <section className="px-4 py-20">
-        <SectionTitle eyebrow="Détails" title="Cérémonie & Réception" />
+        <SectionTitle eyebrow="تفاصيل الحفل" title="مراسم الزفاف والاستقبال" />
         <ScrollReveal delay={0.1}>
           <HoverLift>
             <div className="max-w-3xl mx-auto glass-card rounded-3xl p-10 text-center hover-glow">
@@ -177,7 +177,7 @@ export function RoyalOrTemplate({ inv }: { inv: Invitation }) {
 
       {/* ── MAP ──────────────────────────────────────────────────────────── */}
       <section className="relative px-4 py-20">
-        <SectionTitle eyebrow="Itinéraire" title="Rejoignez-nous" />
+        <SectionTitle eyebrow="خريطة الموقع" title="تفضلوا بمشاركتنا فرحتنا" />
         {(() => {
           const embedUrl = getGoogleMapsEmbedUrl(inv);
           const openUrl = getGoogleMapsOpenUrl(inv);
@@ -222,9 +222,9 @@ export function RoyalOrTemplate({ inv }: { inv: Invitation }) {
                     href={openUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 text-[color:var(--gold)] hover:text-[#f0d78c] font-[family-name:var(--font-display)] tracking-widest text-sm transition-colors duration-300"
+                    className="inline-flex items-center gap-2 text-[color:var(--gold)] hover:text-[#f0d78c] font-[family-name:var(--font-display)] tracking-wider text-sm transition-colors duration-300 cursor-pointer"
                   >
-                    <MapPin size={16} /> Ouvrir dans Maps
+                    <MapPin size={16} /> الموقع على الخريطة
                   </a>
                 </div>
               )}
@@ -236,21 +236,21 @@ export function RoyalOrTemplate({ inv }: { inv: Invitation }) {
       {/* ── RSVP ─────────────────────────────────────────────────────────── */}
       <section className="px-4 py-24 text-center relative">
         <FloatingHearts count={8} palette="rose" />
-        <SectionTitle eyebrow="RSVP" title="Confirmez votre présence" />
+        <SectionTitle eyebrow="تأكيد الحضور" title="حضوركم يبهج قلوبنا" />
         <ScrollReveal delay={0.2}>
-          <p className="max-w-xl mx-auto text-muted-foreground font-[family-name:var(--font-serif)] italic mb-8">
-            Votre présence comptera énormément pour nous. Merci de confirmer votre venue avant le grand jour.
+          <p className="max-w-xl mx-auto text-muted-foreground font-[family-name:var(--font-serif)] mb-8">
+            حضوركم يسعدنا ويشرفنا. يرجى تأكيد حضوركم قبل موعد الحفل لمشاركتنا فرحة العمر.
           </p>
           <motion.a
-            href={`https://wa.me/${inv.whatsappNumber}?text=${encodeURIComponent(`Bonjour, je confirme ma présence au mariage de ${inv.brideName} & ${inv.groomName}.`)}`}
+            href={`https://wa.me/${inv.whatsappNumber}?text=${encodeURIComponent(`السلام عليكم، أؤكد حضوري لحفل زفاف ${inv.brideName} و ${inv.groomName}.`)}`}
             target="_blank"
             rel="noreferrer"
-            className="btn-royal inline-flex items-center gap-3 px-9 py-4 rounded-full text-sm md:text-base"
+            className="btn-royal inline-flex items-center gap-3 px-9 py-4 rounded-full text-sm md:text-base cursor-pointer"
             whileHover={{ scale: 1.04, y: -2 }}
             whileTap={{ scale: 0.98 }}
             transition={{ duration: 0.25 }}
           >
-            <MessageCircle size={18} /> Confirmer sur WhatsApp
+            <MessageCircle size={18} /> تأكيد الحضور عبر واتساب
           </motion.a>
         </ScrollReveal>
       </section>
@@ -261,11 +261,11 @@ export function RoyalOrTemplate({ inv }: { inv: Invitation }) {
         <ScrollReveal delay={0.1}>
           <TitleGlow color="rgba(212,175,55,0.5)">
             <p className="mt-6 font-[family-name:var(--font-script)] text-3xl text-gold-gradient">
-              Merci infiniment
+              شكراً لكم من القلب
             </p>
           </TitleGlow>
-          <p className="mt-3 text-xs tracking-[0.4em] uppercase text-muted-foreground font-[family-name:var(--font-display)]">
-            Fait avec amour
+          <p className="mt-3 text-xs tracking-[0.2em] uppercase text-muted-foreground font-[family-name:var(--font-display)]">
+            دمتم في حفظ الله ورعايته
           </p>
         </ScrollReveal>
       </footer>

@@ -27,34 +27,34 @@ export const TEMPLATES: {
 }[] = [
   {
     id: "royal-or",
-    name: "Royal Or",
-    tagline: "Ivoire & Or — l'élégance d'un palais",
+    name: "الملكي الذهبي",
+    tagline: "العاج والذهب — أناقة القصور الفاخرة",
     description:
-      "Faire-part lumineux, pétales dorés, typographie cursive prestigieuse. L'esprit d'un mariage royal méditerranéen.",
+      "دعوة مضيئة، بتلات ذهبية متحركة، خط عربي أصيل ورائع. تجسيد لجمال حفل زفاف ملكي متوسطي.",
     palette: ["#FFF8F0", "#F7E7CE", "#D4AF37", "#6B4F1D"],
   },
   {
     id: "noir-emeraude",
-    name: "Noir & Émeraude",
-    tagline: "Sombre, mystérieux, somptueux",
+    name: "الأسود والزمردي",
+    tagline: "غموض الليل الساحر ورقي الزمرد والذهب",
     description:
-      "Esthétique nocturne, accents émeraude et or, ornements art-déco. Pour un mariage d'exception au cœur de la nuit.",
+      "جمالية ليلية استثنائية، تفاصيل باللونين الزمردي والذهبي، زخارف آرت ديكو فاخرة. لحفل زفاف لا يُنسى في قلب الليل.",
     palette: ["#0A0F0C", "#0D2A22", "#1E7A5A", "#D4AF37"],
   },
   {
     id: "jardin-rose",
-    name: "Jardin Rose",
-    tagline: "Romantique, floral, poudré",
+    name: "حديقة الورد",
+    tagline: "لمسة رومانسية ناعمة بنغمات وردية بودرة",
     description:
-      "Inspiration jardin botanique, tons poudrés, feuillages aquarelle. Un faire-part doux comme une promesse.",
+      "مستوحى من الحدائق الخلابة، نغمات وردية بودرة، وأوراق مائية رقيقة. دعوة زفاف ناعمة كالوعد.",
     palette: ["#FBF4F1", "#F5D6D0", "#C97A7E", "#5C4033"],
   },
   {
     id: "velours-rouge",
-    name: "Velours Rouge",
-    tagline: "Théâtral, passionné, impérial",
+    name: "المخمل الأحمر",
+    tagline: "افتتاح مسرحي ملكي على ستائر المخمل الأحمر",
     description:
-      "Fils d'or sur drapé de velours rouge profond, lever de rideau théâtral. L'expression d'un amour passionné et prestigieux.",
+      "خيوط ذهبية على مخمل أحمر ملكي، مع افتتاح مسرحي مذهل للستار. تعبير فريد عن الحب والشغف والرفاهية.",
     palette: ["#16030a", "#5a0d20", "#8a1d38", "#d4af37"],
   },
 ];
@@ -63,14 +63,14 @@ export const invitations: Invitation[] = [
   {
     id: "1",
     slug: "khalil-sarah",
-    groomName: "Khalil",
-    brideName: "Sarah",
+    groomName: "خليل",
+    brideName: "سارة",
     weddingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 45).toISOString(),
-    venue: "Palais Bayram",
-    address: "Avenue Habib Bourguiba, Tunis, Tunisie",
+    venue: "قصر بايرام الأثري",
+    address: "نهج أندلسية، المدينة العتيقة، تونس",
     googleMapsLink: "https://www.google.com/maps?q=Palais+Bayram+Tunis&output=embed",
     message:
-      "C'est avec une joie immense que nous vous invitons à partager les instants précieux de notre union. Votre présence sera le plus beau des cadeaux.",
+      "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ. «وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً». بقلوب ملؤها المحبة والسرور، يشرفنا دعوتكم لحضور حفل زفافنا ومشاركتنا فرحة العمر. حضوركم يكتمل به بهاؤنا.",
     photoUrl:
       "https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&q=80",
     whatsappNumber: "21612345678",
@@ -81,14 +81,14 @@ export const invitations: Invitation[] = [
   {
     id: "2",
     slug: "amine-yasmine",
-    groomName: "Amine",
-    brideName: "Yasmine",
+    groomName: "أمين",
+    brideName: "ياسمين",
     weddingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 90).toISOString(),
-    venue: "Dar El Jeld",
-    address: "Medina de Tunis, Tunisie",
+    venue: "فندق دار الجلد الفخم",
+    address: "نهج دار الجلد، المدينة العتيقة، تونس",
     googleMapsLink: "https://www.google.com/maps?q=Dar+El+Jeld+Tunis&output=embed",
     message:
-      "L'amour est la poésie des sens. Honorez-nous de votre présence en ce jour béni.",
+      "في ليلة من ليالي العمر، نسجنا فيها الحب خيوطاً من ذهب، يسعدنا أن تشاركونا فرحتنا الكبرى وتكونوا شهوداً على بداية رباطنا المقدس وحياتنا المشتركة. ننتظركم بكل حب وشوق.",
     photoUrl:
       "https://images.unsplash.com/photo-1606800052052-a08af7148866?w=1200&q=80",
     whatsappNumber: "21698765432",
@@ -99,14 +99,14 @@ export const invitations: Invitation[] = [
   {
     id: "3",
     slug: "anis-rim",
-    groomName: "Anis",
-    brideName: "Rim",
+    groomName: "أنيس",
+    brideName: "ريم",
     weddingDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 60).toISOString(),
-    venue: "Palais Ennejma Ezzahra",
-    address: "Sidi Bou Said, Tunisie",
+    venue: "قصر النجمة الزهراء الموسيقي",
+    address: "سيدي بوسعيد، تونس",
     googleMapsLink: "https://www.google.com/maps?q=Ennejma+Ezzahra+Sidi+Bou+Said&output=embed",
     message:
-      "Une soirée suspendue dans le temps, sous le signe de la passion et de l'élégance. Rejoignez-nous pour notre premier lever de rideau.",
+      "على أنغام المألوف التونسي الفواح وبأريج الياسمين والورد، نتشرف بدعوتكم لمشاركتنا ليلة العمر والاحتفال بقراننا المبارك في أجواء من البهجة والسرور. حضوركم يبهجنا ويسعدنا.",
     photoUrl:
       "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=1200&q=80",
     whatsappNumber: "21612345678",
