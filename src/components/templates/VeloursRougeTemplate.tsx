@@ -251,8 +251,17 @@ function getGoogleMapsEmbedUrl(inv: {
   address?: string;
   venue?: string;
 }) {
-  if (inv.googleMapsLink?.includes("/embed")) return inv.googleMapsLink;
-  const query = inv.address || inv.venue;
+  if (inv.googleMapsLink) {
+    const link = inv.googleMapsLink.trim();
+    if (link.includes("/embed") || link.includes("output=embed")) {
+      return link;
+    }
+    if (link.includes("google.com/maps") || link.includes("maps.google.com")) {
+      return link.includes("?") ? `${link}&output=embed` : `${link}?output=embed`;
+    }
+  }
+  const queryParts = [inv.venue, inv.address].filter(Boolean);
+  const query = queryParts.join(", ");
   if (!query) return "";
   return `https://www.google.com/maps?q=${encodeURIComponent(query)}&output=embed`;
 }
@@ -262,8 +271,11 @@ function getGoogleMapsOpenUrl(inv: {
   address?: string;
   venue?: string;
 }) {
-  if (inv.googleMapsLink) return inv.googleMapsLink.replace("&output=embed", "");
-  const query = inv.address || inv.venue;
+  if (inv.googleMapsLink) {
+    return inv.googleMapsLink.replace("&output=embed", "").replace("?output=embed", "");
+  }
+  const queryParts = [inv.venue, inv.address].filter(Boolean);
+  const query = queryParts.join(", ");
   if (!query) return "";
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
 }
@@ -454,7 +466,7 @@ export function VeloursRougeTemplate({ inv }: { inv: Invitation }) {
 
       {/* ── COUNTDOWN ────────────────────────────────────────────────────── */}
       <section className="relative px-4 py-20">
-        <Title eyebrow="العد التنازلي" title="في انتظار دقة البدء" />
+        <Title eyebrow="العد التنازلي" title="في انتظار دقيقة البدء" />
         <Countdown date={inv.weddingDate} />
       </section>
 
