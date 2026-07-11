@@ -485,12 +485,18 @@ function InvitationForm({
               className={inputCls}
             />
           </Field>
-          <Field label="Lien Google Maps (embed)" full>
-            <input
-              value={form.googleMapsLink}
-              onChange={(e) => set("googleMapsLink", e.target.value)}
-              className={inputCls}
-            />
+          <Field label="Lien Google Maps (Utilisez l'URL d'intégration 'Intégrer une carte' de Google Maps)" full>
+            <div className="flex flex-col gap-1.5 w-full">
+              <input
+                value={form.googleMapsLink}
+                onChange={(e) => set("googleMapsLink", e.target.value)}
+                placeholder="https://www.google.com/maps/embed?pb=..."
+                className={inputCls}
+              />
+              <span className="text-[10px] text-white/50 leading-relaxed">
+                💡 <strong>Astuce :</strong> Les liens de partage courts (comme <code className="bg-white/10 px-1 rounded">maps.app.goo.gl</code>) ne peuvent pas être intégrés dans un iframe pour des raisons de sécurité de Google. Renseignez le nom exact de la salle dans <strong>"Lieu"</strong> (ex: <code className="bg-white/10 px-1 rounded">قصر الأفراح المها</code>) pour que la recherche automatique pointe dessus, ou copiez le lien d'intégration de Google Maps.
+              </span>
+            </div>
           </Field>
           <Field label="URL photo du couple" full>
             <input
