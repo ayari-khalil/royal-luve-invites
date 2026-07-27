@@ -4,7 +4,6 @@ import { getInvitationBySlug } from "@/lib/storage";
 import { RoyalOrTemplate } from "@/components/templates/RoyalOrTemplate";
 import { NoirEmeraudeTemplate } from "@/components/templates/NoirEmeraudeTemplate";
 import { VeloursRougeTemplate } from "@/components/templates/VeloursRougeTemplate";
-import { RideauImperialTemplate } from "@/components/templates/RideauImperialTemplate";
 
 export const Route = createFileRoute("/invitation/$slug")({
   loader: async ({ params }) => {
@@ -48,10 +47,8 @@ function InvitationContent() {
       return <NoirEmeraudeTemplate inv={inv} />;
 
     case "velours-rouge":
-      return <VeloursRougeTemplate inv={inv} />;
-
     case "rideau-imperial":
-      return <RideauImperialTemplate inv={inv} />;
+      return <VeloursRougeTemplate inv={inv} />;
 
     case "royal-or":
     case "jardin-rose":
