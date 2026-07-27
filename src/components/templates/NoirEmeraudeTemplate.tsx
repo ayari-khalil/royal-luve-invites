@@ -136,10 +136,12 @@ export function NoirEmeraudeTemplate({ inv }: { inv: Invitation }) {
     day: "numeric",
     month: "long",
     year: "numeric",
+    timeZone: "Africa/Tunis",
   });
   const timeLabel = dateObj.toLocaleTimeString("ar-TN", {
     hour: "2-digit",
     minute: "2-digit",
+    timeZone: "Africa/Tunis",
   });
 
   return (
@@ -181,8 +183,8 @@ export function NoirEmeraudeTemplate({ inv }: { inv: Invitation }) {
             color="rgba(212,175,55,0.3)"
             className="-translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2"
           />
-          <div className="w-20 h-20 md:w-24 md:h-24 rounded-full border-2 border-[#d4af37] flex items-center justify-center font-[family-name:var(--font-display)] text-2xl md:text-3xl text-emerald-gradient relative z-10">
-            {inv.brideName[0]}&{inv.groomName[0]}
+          <div className="w-20 h-20 md:w-24 md:h-24 rounded-full border-2 border-[#d4af37] flex items-center justify-center font-[family-name:var(--font-serif)] text-2xl md:text-3xl text-emerald-gradient relative z-10">
+            {inv.brideName[0]} و {inv.groomName[0]}
           </div>
         </motion.div>
 

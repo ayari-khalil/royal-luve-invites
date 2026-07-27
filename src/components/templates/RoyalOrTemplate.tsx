@@ -62,10 +62,12 @@ export function RoyalOrTemplate({ inv }: { inv: Invitation }) {
     day: "numeric",
     month: "long",
     year: "numeric",
+    timeZone: "Africa/Tunis",
   });
   const timeLabel = dateObj.toLocaleTimeString("ar-TN", {
     hour: "2-digit",
     minute: "2-digit",
+    timeZone: "Africa/Tunis",
   });
 
   return (

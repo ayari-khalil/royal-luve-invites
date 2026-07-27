@@ -75,7 +75,7 @@ function VelvetPanel({ side }: { side: "left" | "right" }) {
             "linear-gradient(180deg, rgba(255,230,170,0.14) 0%, rgba(255,255,255,0) 30%, rgba(0,0,0,0.5) 100%)",
         }}
       />
-      
+
       {/* Gold embroidery lace trim on the parting borders */}
       <div
         className="absolute inset-y-0 w-2.5"
@@ -255,7 +255,7 @@ function CurtainStage({
             transition={{ duration: 0.6 }}
           >
             {/* Left gold hanging cord */}
-            <div 
+            <div
               className="absolute top-0 bottom-0 w-1 origin-top-left"
               style={{
                 left: "calc(50% - 24px)",
@@ -264,7 +264,7 @@ function CurtainStage({
               }}
             />
             {/* Right gold hanging cord */}
-            <div 
+            <div
               className="absolute top-0 bottom-0 w-1 origin-top-right"
               style={{
                 right: "calc(50% - 24px)",
@@ -289,7 +289,7 @@ function CurtainStage({
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.8 }}
           >
-            <motion.div 
+            <motion.div
               className="glass-velvet p-8 rounded-full border-2 border-[#d4af37] shadow-[0_0_40px_rgba(212,175,55,0.45)] flex flex-col items-center justify-center pointer-events-auto cursor-pointer animate-[curtainBreathe_3.2s_ease-in-out_infinite]"
               onClick={onClickOpen}
               whileHover={{ scale: 1.05 }}
@@ -439,15 +439,19 @@ export function VeloursRougeTemplate({ inv }: { inv: Invitation }) {
     day: "numeric",
     month: "long",
     year: "numeric",
+    timeZone: "Africa/Tunis",
   });
   const timeLabel = dateObj.toLocaleTimeString("ar-TN", {
     hour: "2-digit",
     minute: "2-digit",
+    timeZone: "Africa/Tunis",
   });
 
   const reveal = (delay: number) => ({
     initial: { opacity: 0, y: 28 },
-    animate: open ? { opacity: 1, y: 0 } : { opacity: 0, y: 28 },
+    animate: open
+      ? { opacity: 1, y: 0, transitionEnd: { transform: "none" } }
+      : { opacity: 0, y: 28 },
     transition: { delay: reduceMotion ? 0 : delay, duration: 1.1, ease: [0.22, 1, 0.36, 1] },
   });
 
@@ -538,7 +542,7 @@ export function VeloursRougeTemplate({ inv }: { inv: Invitation }) {
             {/* Custom Monogram Badge with spinning ornament circle & correct Arabic coordinator "و" */}
             <motion.div
               initial={{ opacity: 0, scale: 0.6 }}
-              animate={open ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.6 }}
+              animate={open ? { opacity: 1, scale: 1, transitionEnd: { transform: "none" } } : { opacity: 0, scale: 0.6 }}
               transition={{ delay: reduceMotion ? 0 : 1.2, duration: 1.1 }}
               className="relative inline-flex items-center justify-center mb-8 z-10"
             >
@@ -758,19 +762,9 @@ export function VeloursRougeTemplate({ inv }: { inv: Invitation }) {
         <Title eyebrow="تأكيد الحضور" title="بانتظار تشريفكم لنا" />
         <ScrollReveal delay={0.1}>
           <p className="max-w-2xl mx-auto text-[#fbeed7]/80 font-[family-name:var(--font-serif)] text-lg md:text-xl mb-10 leading-relaxed font-medium">
-            ستفتح أبواب الفرح قريباً. نرجو تأكيد حضوركم لتشهدوا معنا أجمل فصول العمر ونرسم معاً ذكرى حب لا تزول.
+            ستفتح أبواب الفرح قريباً. نرجو حضوركم لتشهدوا معنا أجمل فصول العمر ونرسم معاً ذكرى حب لا تزول.
           </p>
-          <motion.a
-            href={`https://wa.me/${inv.whatsappNumber}?text=${encodeURIComponent(`السلام عليكم، أؤكد حضوري لحفل زفاف ${inv.brideName} و ${inv.groomName}.`)}`}
-            target="_blank"
-            rel="noreferrer"
-            className="btn-velours-gold inline-flex items-center gap-3.5 px-10 py-5 rounded-full text-base transition-all duration-300 cursor-pointer"
-            whileHover={{ scale: 1.04, y: -2 }}
-            whileTap={{ scale: 0.98 }}
-            transition={{ duration: 0.2 }}
-          >
-            <MessageCircle size={20} /> تأكيد الحضور عبر واتساب
-          </motion.a>
+
         </ScrollReveal>
       </section>
 
