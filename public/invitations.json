@@ -1,0 +1,77 @@
+[
+  {
+    "id": "1",
+    "slug": "khalil-sarah",
+    "groomName": "خليل",
+    "brideName": "سارة",
+    "weddingDate": "2026-09-10T19:00:00.000Z",
+    "venue": "قصر بايرام الأثري",
+    "address": "نهج أندلسية، المدينة العتيقة، تونس",
+    "googleMapsLink": "https://www.google.com/maps?q=Palais+Bayram+Tunis&output=embed",
+    "message": "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ. «وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً». بقلوب ملؤها المحبة والسرور، يشرفنا دعوتكم لحضور حفل زفافنا ومشاركتنا فرحة العمر. حضوركم يكتمل به بهاؤنا.",
+    "photoUrl": "https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&q=80",
+    "whatsappNumber": "21612345678",
+    "theme": "or",
+    "template": "royal-or",
+    "createdAt": "2026-07-27T15:00:00.000Z"
+  },
+  {
+    "id": "2",
+    "slug": "amine-yasmine",
+    "groomName": "أمين",
+    "brideName": "ياسمين",
+    "weddingDate": "2026-10-25T19:00:00.000Z",
+    "venue": "فندق دار الجلد الفخم",
+    "address": "نهج دار الجلد، المدينة العتيقة، تونس",
+    "googleMapsLink": "https://www.google.com/maps?q=Dar+El+Jeld+Tunis&output=embed",
+    "message": "في ليلة من ليالي العمر، نسجنا فيها الحب خيوطاً من ذهب، يسعدنا أن تشاركونا فرحتنا الكبرى وتكونوا شهوداً على بداية رباطنا المقدس وحياتنا المشتركة. ننتظركم بكل حب وشوق.",
+    "photoUrl": "https://images.unsplash.com/photo-1606800052052-a08af7148866?w=1200&q=80",
+    "whatsappNumber": "21698765432",
+    "theme": "rose",
+    "template": "noir-emeraude",
+    "createdAt": "2026-07-27T15:00:00.000Z"
+  },
+  {
+    "id": "4",
+    "slug": "kais-farah",
+    "groomName": "قيس",
+    "brideName": "فرح",
+    "weddingDate": "2026-10-15T18:00:00.000Z",
+    "venue": "قصر السعادة الأثري",
+    "address": "المرسى، تونس",
+    "googleMapsLink": "https://www.google.com/maps?q=Palais+Saada+La+Marsa&output=embed",
+    "message": "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ. في حفل يملؤه عبير الياسمين التونسي الفواح، يسعدنا أن ندعوكم لمشاركتنا فرحة زفافنا السعيد، لتكونوا شهوداً على عهدنا الأبدي بالحب والمودة. حضوركم شرف لنا وبهاء لليلتنا.",
+    "photoUrl": "https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&q=80",
+    "whatsappNumber": "21699888777",
+    "theme": "or",
+    "template": "rideau-imperial",
+    "musicUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+    "createdAt": "2026-07-27T15:00:00.000Z"
+  },
+  {
+    "id": "8",
+    "slug": "ahmed-oula",
+    "groomName": "احمد الواشرين",
+    "brideName": "عُلا الخلادي",
+    "weddingDate": "2026-08-15T21:00:00.000Z",
+    "venue": "قاعة أفراح الأوبرا – العالية",
+    "address": " 52CG+VFP، العالية 7016، ولاية بنزرت، تونس.",
+    "googleMapsLink": "https://www.google.com/maps?q=salle+des+fetes+opera+el+alia&output=embed",
+    "message": "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ. «وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً». بقلوب ملؤها المحبة والسرور، يشرفنا دعوتكم لحضور حفل زفافنا ومشاركتنا فرحة العمر. حضوركم يكتمل به بهاؤنا.",
+    "photoUrl": "https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&q=80",
+    "whatsappNumber": "21612345678",
+    "theme": "or",
+    "template": "velours-rouge",
+    "additionalDates": [
+      {
+        "label": "عقد القران",
+        "date": "2026-08-13"
+      },
+      {
+        "label": "النبيته",
+        "date": "2026-08-14"
+      }
+    ],
+    "createdAt": "2026-07-27T15:00:00.000Z"
+  }
+]

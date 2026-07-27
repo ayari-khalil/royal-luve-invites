@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState , useRef } from "react";
 import { TEMPLATES, type Invitation } from "@/data/invitations";
+import { getInvitations, saveInvitation, deleteInvitation } from "@/lib/storage";
 import { motion } from "framer-motion";
 import {
   Crown,
@@ -12,118 +13,114 @@ import {
   Search,
   Check,
   Lock,
+  Download,
+  Upload,
 } from "lucide-react";
+
 export const Route = createFileRoute("/admin")({
   component: AdminDashboard,
   head: () => ({
     meta: [{ title: "Admin — Royal Wedding VIP" }],
   }),
 });
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 const DEFAULT_WEDDING_PHOTO =
   "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop";
 
 function AdminDashboard() {
-const [auth, setAuth] = useState(false);
-const [err, setErr] = useState("");
+  const [auth, setAuth] = useState(false);
+  const [err, setErr] = useState("");
 
-const userRef = useRef<HTMLInputElement>(null);
-const pwdRef = useRef<HTMLInputElement>(null);
+  const userRef = useRef<HTMLInputElement>(null);
+  const pwdRef = useRef<HTMLInputElement>(null);
 
-const [list, setList] = useState<Invitation[]>([]);
-const [loading, setLoading] = useState(false);
-const [query, setQuery] = useState("");
+  const [list, setList] = useState<Invitation[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [query, setQuery] = useState("");
   const [copied, setCopied] = useState<string | null>(null);
   const [editing, setEditing] = useState<Invitation | null>(null);
   const [creating, setCreating] = useState(false);
 
   useEffect(() => {
-  if (!auth) return;
+    if (!auth) return;
 
-  async function loadInvitations() {
-    try {
-      setLoading(true);
-
-      const res = await fetch(`${API_URL}/api/invitations`);
-
-      if (!res.ok) {
-        throw new Error("Erreur lors du chargement des invitations");
+    async function loadInvitations() {
+      try {
+        setLoading(true);
+        const data = await getInvitations();
+        setList(data);
+      } catch (error) {
+        console.error("Erreur chargement invitations:", error);
+        setList([]);
+      } finally {
+        setLoading(false);
       }
-
-      const data = await res.json();
-      setList(data);
-    } catch (error) {
-      console.error("Erreur chargement invitations:", error);
-      setList([]);
-    } finally {
-      setLoading(false);
     }
-  }
 
-  loadInvitations();
-}, [auth]);
+    loadInvitations();
+  }, [auth]);
 
   if (!auth) {
-  return (
-    <div className="min-h-screen bg-noir flex items-center justify-center px-4">
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
+    return (
+      <div className="min-h-screen bg-noir flex items-center justify-center px-4">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
 
-          const formData = new FormData(e.currentTarget);
-          const username = String(formData.get("username") || "").trim();
-          const password = String(formData.get("password") || "");
+            const formData = new FormData(e.currentTarget);
+            const username = String(formData.get("username") || "").trim();
+            const password = String(formData.get("password") || "");
 
-          if (username === "admin" && password === "royal2026") {
-            setAuth(true);
-            setErr("");
-          } else {
-            setErr("Identifiants incorrects");
-          }
-        }}
-        className="glass-noir rounded-3xl p-10 w-full max-w-md text-center"
-      >
-        <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-[color:var(--gold)]/20 text-[color:var(--gold)] mb-4">
-          <Lock size={20} />
-        </div>
+            if (username === "admin" && password === "royal2026") {
+              setAuth(true);
+              setErr("");
+            } else {
+              setErr("Identifiants incorrects");
+            }
+          }}
+          className="glass-noir rounded-3xl p-10 w-full max-w-md text-center"
+        >
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-[color:var(--gold)]/20 text-[color:var(--gold)] mb-4">
+            <Lock size={20} />
+          </div>
 
-        <h1 className="font-[family-name:var(--font-display)] tracking-widest text-gold-gradient text-xl">
-          ACCÈS ADMIN
-        </h1>
+          <h1 className="font-[family-name:var(--font-display)] tracking-widest text-gold-gradient text-xl">
+            ACCÈS ADMIN
+          </h1>
 
-        <p className="mt-2 text-sm text-white/60 font-[family-name:var(--font-serif)] italic">
-          Démo : admin / royal2026
-        </p>
+          <p className="mt-2 text-sm text-white/60 font-[family-name:var(--font-serif)] italic">
+            Démo : admin / royal2026
+          </p>
 
-        <input
-          name="username"
-          type="text"
-          autoComplete="username"
-          placeholder="Identifiant"
-          className="mt-6 w-full px-4 py-3 rounded-xl bg-white/5 border border-[color:var(--gold)]/30 text-white placeholder:text-white/40 focus:outline-none focus:border-[color:var(--gold)]"
-        />
+          <input
+            name="username"
+            type="text"
+            autoComplete="username"
+            placeholder="Identifiant"
+            className="mt-6 w-full px-4 py-3 rounded-xl bg-white/5 border border-[color:var(--gold)]/30 text-white placeholder:text-white/40 focus:outline-none focus:border-[color:var(--gold)]"
+          />
 
-        <input
-          name="password"
-          type="password"
-          autoComplete="current-password"
-          placeholder="Mot de passe"
-          className="mt-3 w-full px-4 py-3 rounded-xl bg-white/5 border border-[color:var(--gold)]/30 text-white placeholder:text-white/40 focus:outline-none focus:border-[color:var(--gold)]"
-        />
+          <input
+            name="password"
+            type="password"
+            autoComplete="current-password"
+            placeholder="Mot de passe"
+            className="mt-3 w-full px-4 py-3 rounded-xl bg-white/5 border border-[color:var(--gold)]/30 text-white placeholder:text-white/40 focus:outline-none focus:border-[color:var(--gold)]"
+          />
 
-        {err && <p className="text-red-400 text-sm mt-3">{err}</p>}
+          {err && <p className="text-red-400 text-sm mt-3">{err}</p>}
 
-        <button type="submit" className="btn-royal w-full mt-6 py-3 rounded-xl">
-          Entrer
-        </button>
+          <button type="submit" className="btn-royal w-full mt-6 py-3 rounded-xl">
+            Entrer
+          </button>
 
-        <Link to="/" className="block mt-4 text-xs text-white/50 tracking-widest uppercase">
-          ← Retour au site
-        </Link>
-      </form>
-    </div>
-  );
-}
+          <Link to="/" className="block mt-4 text-xs text-white/50 tracking-widest uppercase">
+            ← Retour au site
+          </Link>
+        </form>
+      </div>
+    );
+  }
 
   const filtered = list.filter(
     (i) =>
@@ -141,65 +138,72 @@ const [query, setQuery] = useState("");
   };
 
   const remove = async (id: string) => {
-  if (!confirm("Supprimer cette invitation ?")) return;
+    if (!confirm("Supprimer cette invitation ?")) return;
 
-  try {
-    const res = await fetch(`${API_URL}/api/invitations/${id}`, {
-      method: "DELETE",
-    });
-
-    if (!res.ok) {
-      throw new Error("Erreur suppression");
+    try {
+      await deleteInvitation(id);
+      setList((l) => l.filter((i) => i.id !== id));
+    } catch (error) {
+      console.error(error);
+      alert("Impossible de supprimer cette invitation.");
     }
+  };
 
-    setList((l) => l.filter((i) => i.id !== id));
-  } catch (error) {
-    console.error(error);
-    alert("Impossible de supprimer cette invitation.");
-  }
-};
   const save = async (inv: Invitation) => {
-  try {
-    const exists = list.find((i) => i.id === inv.id);
+    try {
+      const savedInvitation = await saveInvitation(inv);
 
-    const res = await fetch(
-      exists
-        ? `${API_URL}/api/invitations/${inv.id}`
-        : `${API_URL}/api/invitations`,
-      {
-        method: exists ? "PUT" : "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(inv),
-      }
-    );
+      setList((l) => {
+        const exists = l.some((i) => i.id === savedInvitation.id);
+        return exists
+          ? l.map((i) => (i.id === savedInvitation.id ? savedInvitation : i))
+          : [savedInvitation, ...l];
+      });
 
-    const data = await res.json();
-
-    if (!res.ok) {
-      throw new Error(data.message || "Erreur sauvegarde");
+      setEditing(null);
+      setCreating(false);
+    } catch (error) {
+      console.error(error);
+      alert("Impossible d'enregistrer cette invitation.");
     }
+  };
 
-    const savedInvitation = data.invitation;
+  const exportJson = () => {
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(list, null, 2));
+    const downloadAnchor = document.createElement("a");
+    downloadAnchor.setAttribute("href", dataStr);
+    downloadAnchor.setAttribute("download", "invitations.json");
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click();
+    downloadAnchor.remove();
+  };
 
-    setList((l) => {
-      return exists
-        ? l.map((i) => (i.id === savedInvitation.id ? savedInvitation : i))
-        : [savedInvitation, ...l];
-    });
-
-    setEditing(null);
-    setCreating(false);
-  } catch (error) {
-    console.error(error);
-    alert(
-      error instanceof Error
-        ? error.message
-        : "Impossible d'enregistrer cette invitation."
-    );
-  }
-};
+  const handleImportJson = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const fileReader = new FileReader();
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+    
+    fileReader.readAsText(files[0], "UTF-8");
+    fileReader.onload = async (event) => {
+      try {
+        const parsed = JSON.parse(event.target?.result as string);
+        if (Array.isArray(parsed)) {
+          const isValid = parsed.every(item => item && typeof item === "object" && "id" in item && "slug" in item);
+          if (isValid) {
+            localStorage.setItem("royal_invitations", JSON.stringify(parsed));
+            setList(parsed);
+            alert("Invitations importées avec succès !");
+          } else {
+            alert("Erreur: Le format du fichier JSON n'est pas valide.");
+          }
+        } else {
+          alert("Erreur: Le fichier doit contenir un tableau JSON d'invitations.");
+        }
+      } catch (err) {
+        alert("Erreur lors de la lecture du fichier JSON.");
+      }
+    };
+  };
 
   return (
     <div className="min-h-screen bg-noir text-white">
@@ -229,15 +233,36 @@ const [query, setQuery] = useState("");
               Vos faire-part
             </h1>
           </div>
-          <button
-            onClick={() => {
-              setCreating(true);
-              setEditing(emptyInvitation());
-            }}
-            className="btn-royal inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm self-start md:self-auto"
-          >
-            <Plus size={16} /> Nouvelle invitation
-          </button>
+          <div className="flex flex-wrap items-center gap-3 self-start md:self-auto">
+            <input
+              type="file"
+              accept=".json"
+              id="import-json-input"
+              onChange={handleImportJson}
+              className="hidden"
+            />
+            <button
+              onClick={() => document.getElementById("import-json-input")?.click()}
+              className="px-5 py-3 rounded-full text-sm border border-[color:var(--gold)]/45 hover:bg-[color:var(--gold)]/10 text-[color:var(--gold)] inline-flex items-center gap-2 cursor-pointer transition"
+            >
+              <Upload size={16} /> Importer JSON
+            </button>
+            <button
+              onClick={exportJson}
+              className="px-5 py-3 rounded-full text-sm border border-[color:var(--gold)]/45 hover:bg-[color:var(--gold)]/10 text-[color:var(--gold)] inline-flex items-center gap-2 cursor-pointer transition"
+            >
+              <Download size={16} /> Exporter JSON
+            </button>
+            <button
+              onClick={() => {
+                setCreating(true);
+                setEditing(emptyInvitation());
+              }}
+              className="btn-royal inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm cursor-pointer"
+            >
+              <Plus size={16} /> Nouvelle invitation
+            </button>
+          </div>
         </div>
 
         <div className="glass-noir rounded-2xl p-4 mb-6 flex items-center gap-3">
@@ -251,62 +276,61 @@ const [query, setQuery] = useState("");
           <span className="text-xs text-white/50">{filtered.length} résultat(s)</span>
         </div>
 
-
         <div className="grid gap-4">
-  {loading && (
-    <p className="text-center text-white/50 py-8 italic">
-      Chargement des invitations...
-    </p>
-  )}
+          {loading && (
+            <p className="text-center text-white/50 py-8 italic">
+              Chargement des invitations...
+            </p>
+          )}
 
-  {!loading &&
-    filtered.map((inv) => (
-            <div
-              key={inv.id}
-              className="glass-noir rounded-2xl p-5 md:p-6 flex flex-col md:flex-row md:items-center gap-4 md:gap-6"
-            >
-              <img
-                src={inv.photoUrl || DEFAULT_WEDDING_PHOTO}
-                alt=""
-                className="w-full md:w-28 h-28 rounded-xl object-cover border border-[color:var(--gold)]/30"
-              />
-              <div className="flex-1 min-w-0">
-                <h3 className="font-[family-name:var(--font-script)] text-3xl text-gold-gradient">
-                  {inv.brideName} & {inv.groomName}
-                </h3>
-                <p className="text-sm text-white/60 truncate">
-                  {inv.venue} — {new Date(inv.weddingDate).toLocaleDateString("fr-FR")}
-                </p>
-                <code className="text-xs text-[color:var(--gold)]/80 truncate block mt-1">
-                  {baseUrl}/marriage/{inv.slug}
-                </code>
+          {!loading &&
+            filtered.map((inv) => (
+              <div
+                key={inv.id}
+                className="glass-noir rounded-2xl p-5 md:p-6 flex flex-col md:flex-row md:items-center gap-4 md:gap-6"
+              >
+                <img
+                  src={inv.photoUrl || DEFAULT_WEDDING_PHOTO}
+                  alt=""
+                  className="w-full md:w-28 h-28 rounded-xl object-cover border border-[color:var(--gold)]/30"
+                />
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-[family-name:var(--font-script)] text-3xl text-gold-gradient">
+                    {inv.brideName} & {inv.groomName}
+                  </h3>
+                  <p className="text-sm text-white/60 truncate">
+                    {inv.venue} — {new Date(inv.weddingDate).toLocaleDateString("fr-FR")}
+                  </p>
+                  <code className="text-xs text-[color:var(--gold)]/80 truncate block mt-1">
+                    {baseUrl}/marriage/{inv.slug}
+                  </code>
+                </div>
+                <div className="flex flex-wrap items-center gap-2">
+                  <IconBtn onClick={() => copy(inv.slug)} title="Copier l'URL">
+                    {copied === inv.slug ? <Check size={16} /> : <Copy size={16} />}
+                  </IconBtn>
+                  <Link
+                    to="/marriage/$slug"
+                    params={{ slug: inv.slug }}
+                    target="_blank"
+                    className="px-3 py-2 rounded-lg border border-[color:var(--gold)]/30 hover:bg-[color:var(--gold)]/10 text-[color:var(--gold)]"
+                    title="Prévisualiser"
+                  >
+                    <Eye size={16} />
+                  </Link>
+                  <IconBtn onClick={() => setEditing(inv)} title="Modifier">
+                    <Pencil size={16} />
+                  </IconBtn>
+                  <IconBtn
+                    onClick={() => remove(inv.id)}
+                    title="Supprimer"
+                    danger
+                  >
+                    <Trash2 size={16} />
+                  </IconBtn>
+                </div>
               </div>
-              <div className="flex flex-wrap items-center gap-2">
-                <IconBtn onClick={() => copy(inv.slug)} title="Copier l'URL">
-                  {copied === inv.slug ? <Check size={16} /> : <Copy size={16} />}
-                </IconBtn>
-                <Link
-                  to="/marriage/$slug"
-                  params={{ slug: inv.slug }}
-                  target="_blank"
-                  className="px-3 py-2 rounded-lg border border-[color:var(--gold)]/30 hover:bg-[color:var(--gold)]/10 text-[color:var(--gold)]"
-                  title="Prévisualiser"
-                >
-                  <Eye size={16} />
-                </Link>
-                <IconBtn onClick={() => setEditing(inv)} title="Modifier">
-                  <Pencil size={16} />
-                </IconBtn>
-                <IconBtn
-                  onClick={() => remove(inv.id)}
-                  title="Supprimer"
-                  danger
-                >
-                  <Trash2 size={16} />
-                </IconBtn>
-              </div>
-            </div>
-          ))}
+            ))}
           {!loading && filtered.length === 0 && (
             <p className="text-center text-white/50 py-12 italic">
               Aucune invitation pour le moment.

@@ -418,8 +418,8 @@ export function VeloursRougeTemplate({ inv }: { inv: Invitation }) {
                 color="rgba(212,175,55,0.3)"
                 className="-translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2"
               />
-              <div className="w-20 h-20 md:w-24 md:h-24 rounded-full border-2 border-[#d4af37] bg-[#2a0510]/60 flex items-center justify-center font-[family-name:var(--font-display)] text-2xl md:text-3xl text-champagne-gradient relative z-10">
-                {inv.brideName[0]}&{inv.groomName[0]}
+              <div className="w-20 h-20 md:w-24 md:h-24 rounded-full border-2 border-[#d4af37] bg-[#2a0510]/60 flex items-center justify-center font-[family-name:var(--font-serif)] text-2xl md:text-3xl text-champagne-gradient relative z-10">
+                {inv.brideName[0]} و {inv.groomName[0]}
               </div>
             </motion.div>
 
@@ -521,6 +521,30 @@ export function VeloursRougeTemplate({ inv }: { inv: Invitation }) {
                   {timeLabel}
                 </p>
               </div>
+              {inv.additionalDates && inv.additionalDates.length > 0 && (
+                <div className="mt-8 pt-8 border-t border-[#d4af37]/20 flex flex-col gap-4">
+                  <p className="text-xs tracking-[0.2em] uppercase text-[#d4af37] font-[family-name:var(--font-display)]">
+                    ❖ مراسم إضافية ❖
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-xl mx-auto w-full">
+                    {inv.additionalDates.map((item, idx) => {
+                      const d = new Date(item.date);
+                      const formatted = d.toLocaleDateString("ar-TN", {
+                        weekday: "long",
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric"
+                      });
+                      return (
+                        <div key={idx} className="glass-velvet rounded-xl p-4 border border-[#d4af37]/15">
+                          <p className="text-sm font-semibold text-[#d4af37] font-[family-name:var(--font-serif)]">{item.label}</p>
+                          <p className="mt-1 text-xs text-[#f3e6ce]/80 font-[family-name:var(--font-body)]">{formatted}</p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
             </div>
           </HoverLift>
         </ScrollReveal>
@@ -588,22 +612,7 @@ export function VeloursRougeTemplate({ inv }: { inv: Invitation }) {
       <section className="relative px-4 py-24 text-center">
         <FloatingHearts count={8} palette="gold" />
         <Title eyebrow="تأكيد الحضور" title="بانتظار تشريفكم لنا" />
-        <ScrollReveal delay={0.2}>
-          <p className="max-w-xl mx-auto text-[#f3e6ce]/70 font-[family-name:var(--font-serif)] mb-8">
-            سترفع الستار قريباً. نرجو تأكيد حضوركم لتشهدوا معنا أجمل فصول العمر.
-          </p>
-          <motion.a
-            href={`https://wa.me/${inv.whatsappNumber}?text=${encodeURIComponent(`السلام عليكم، أؤكد حضوري لحفل زفاف ${inv.brideName} و ${inv.groomName}.`)}`}
-            target="_blank"
-            rel="noreferrer"
-            className="btn-velours inline-flex items-center gap-3 px-9 py-4 rounded-full text-sm md:text-base transition-shadow duration-300 cursor-pointer"
-            whileHover={{ scale: 1.04, y: -2 }}
-            whileTap={{ scale: 0.98 }}
-            transition={{ duration: 0.25 }}
-          >
-            <MessageCircle size={18} /> تأكيد الحضور عبر واتساب
-          </motion.a>
-        </ScrollReveal>
+
       </section>
 
       {/* ── FOOTER ───────────────────────────────────────────────────────── */}

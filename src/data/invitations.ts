@@ -14,9 +14,10 @@ export type Invitation = {
   theme: "or" | "rose" | "noir";
   template: TemplateId;
   createdAt: string;
+  additionalDates?: { label: string; date: string }[];
 };
 
-export type TemplateId = "royal-or" | "noir-emeraude" | "jardin-rose" | "velours-rouge";
+export type TemplateId = "royal-or" | "noir-emeraude" | "jardin-rose" | "velours-rouge" | "rideau-imperial";
 
 export const TEMPLATES: {
   id: TemplateId;
@@ -56,6 +57,14 @@ export const TEMPLATES: {
       description:
         "خيوط ذهبية على مخمل أحمر ملكي، مع افتتاح مسرحي مذهل للستار. تعبير فريد عن الحب والشغف والرفاهية.",
       palette: ["#16030a", "#5a0d20", "#8a1d38", "#d4af37"],
+    },
+    {
+      id: "rideau-imperial",
+      name: "الستار الإمبراطوري",
+      tagline: "ستار مخملي فاخر يفتح مباشرة دون مظروف",
+      description:
+        "ستائر مخملية حمراء غنية بتفاصيل ثلاثية الأبعاد وشرائط ذهبية ملكية، تنفتح مباشرة عند الدخول. تصميم فاخر وخطوط عربية عريضة وواضحة.",
+      palette: ["#120104", "#420512", "#780c21", "#d4af37"],
     },
   ];
 
@@ -113,6 +122,32 @@ export const invitations: Invitation[] = [
     theme: "or",
     template: "velours-rouge",
     createdAt: new Date().toISOString(),
+  },
+  {
+    id: "8",
+    slug: "ahmed-oula",
+    groomName: "احمد الواشرين",
+    brideName: "عُلا الخلادي",
+    weddingDate: "2026-09-10T19:00:00.000Z",
+    venue: "قاعة أفراح الأوبرا – العالية",
+    address: " 52CG+VFP، العالية 7016، ولاية بنزرت، تونس.",
+    googleMapsLink: "https://www.google.com/maps?q=salle+des+fetes+opera+el+alia&output=embed",
+    message: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ. «وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً». بقلوب ملؤها المحبة والسرور، يشرفنا دعوتكم لحضور حفل زفافنا ومشاركتنا فرحة العمر. حضوركم يكتمل به بهاؤنا.",
+    photoUrl: "https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&q=80",
+    whatsappNumber: "21612345678",
+    theme: "or",
+    template: "velours-rouge",
+    additionalDates: [
+      {
+        label: "عقد القران",
+        date: "2026-08-13"
+      },
+      {
+        label: "النبيته",
+        date: "2026-08-14"
+      }
+    ],
+    createdAt: "2026-07-27T15:00:00.000Z"
   },
 ];
 

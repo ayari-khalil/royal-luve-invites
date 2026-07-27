@@ -2,31 +2,18 @@ import { createFileRoute, notFound, useNavigate } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import { ChevronDown, Sparkles as SparkleIcon } from "lucide-react";
-import { invitations, type Invitation } from "@/data/invitations";
+import { type Invitation } from "@/data/invitations";
+import { getInvitationBySlug } from "@/lib/storage";
 import { FloatingPetals } from "@/components/FloatingPetals";
 import { Sparkles } from "@/components/Sparkles";
 import { Ornament } from "@/components/Ornament";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
-
-
-
 export const Route = createFileRoute("/marriage/$slug")({
   loader: async ({ params }) => {
-    try {
-      const res = await fetch(`${API_URL}/api/invitations/${params.slug}`);
-      if (res.ok) {
-        return (await res.json()) as Invitation;
-      }
-    } catch (e) {
-      console.warn("Backend fetch failed, falling back to static data:", e);
+    const inv = await getInvitationBySlug(params.slug);
+    if (inv) {
+      return inv;
     }
-
-    const localInv = invitations.find((i) => i.slug === params.slug);
-    if (localInv) {
-      return localInv;
-    }
-
     throw notFound();
   },
   head: ({ loaderData }) => ({
@@ -52,7 +39,15 @@ function EnvelopePage() {
   const [exiting, setExiting] = useState(false);
   const initials = `${inv.brideName[0]} و ${inv.groomName[0]}`;
 
+  // Redirect immediately if the template is rideau-imperial or velours-rouge
   useEffect(() => {
+    if (inv.template === "rideau-imperial" || inv.template === "velours-rouge") {
+      navigate({ to: "/invitation/$slug", params: { slug: inv.slug }, replace: true });
+    }
+  }, [inv.template, inv.slug, navigate]);
+
+  useEffect(() => {
+    if (inv.template === "rideau-imperial" || inv.template === "velours-rouge") return;
     if (!opened) return;
     const t = setTimeout(() => setExiting(true), 1400);
     const n = setTimeout(() => {
@@ -62,7 +57,7 @@ function EnvelopePage() {
       clearTimeout(t);
       clearTimeout(n);
     };
-  }, [opened, navigate, inv.slug]);
+  }, [opened, navigate, inv.slug, inv.template]);
 
   return (
     <div dir="rtl" className="relative min-h-screen bg-royal overflow-hidden flex flex-col items-center justify-center px-6">

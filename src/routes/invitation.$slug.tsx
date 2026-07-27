@@ -1,27 +1,17 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
-import { invitations, type Invitation } from "@/data/invitations";
+import { type Invitation } from "@/data/invitations";
+import { getInvitationBySlug } from "@/lib/storage";
 import { RoyalOrTemplate } from "@/components/templates/RoyalOrTemplate";
 import { NoirEmeraudeTemplate } from "@/components/templates/NoirEmeraudeTemplate";
 import { VeloursRougeTemplate } from "@/components/templates/VeloursRougeTemplate";
-
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+import { RideauImperialTemplate } from "@/components/templates/RideauImperialTemplate";
 
 export const Route = createFileRoute("/invitation/$slug")({
   loader: async ({ params }) => {
-    try {
-      const res = await fetch(`${API_URL}/api/invitations/${params.slug}`);
-      if (res.ok) {
-        return (await res.json()) as Invitation;
-      }
-    } catch (e) {
-      console.warn("Backend fetch failed, falling back to static data:", e);
+    const inv = await getInvitationBySlug(params.slug);
+    if (inv) {
+      return inv;
     }
-
-    const localInv = invitations.find((i) => i.slug === params.slug);
-    if (localInv) {
-      return localInv;
-    }
-
     throw notFound();
   },
 
@@ -59,6 +49,9 @@ function InvitationContent() {
 
     case "velours-rouge":
       return <VeloursRougeTemplate inv={inv} />;
+
+    case "rideau-imperial":
+      return <RideauImperialTemplate inv={inv} />;
 
     case "royal-or":
     case "jardin-rose":
