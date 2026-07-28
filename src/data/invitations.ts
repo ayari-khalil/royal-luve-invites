@@ -128,7 +128,7 @@ export const invitations: Invitation[] = [
     slug: "ahmed-oula",
     groomName: "احمد الواشرين",
     brideName: "عُلا الخلادي",
-    weddingDate: "2026-09-10T19:00:00.000Z",
+    weddingDate: "2026-08-15T20:00:00.000Z",
     venue: "قاعة أفراح الأوبرا – العالية",
     address: " 52CG+VFP، العالية 7016، ولاية بنزرت، تونس.",
     googleMapsLink: "https://www.google.com/maps?q=salle+des+fetes+opera+el+alia&output=embed",
