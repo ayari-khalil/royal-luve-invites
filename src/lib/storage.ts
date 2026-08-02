@@ -1,36 +1,37 @@
 import { invitations as seedInvitations, type Invitation } from "@/data/invitations";
+import publicInvitations from "../../public/invitations.json";
 
 const STORAGE_KEY = "royal_invitations";
 
 export async function getInvitations(): Promise<Invitation[]> {
-  // 1. Try to fetch static JSON from public folder
-  try {
-    const res = await fetch("/invitations.json");
-    if (res.ok) {
-      const data = await res.json();
-      if (Array.isArray(data) && data.length > 0) {
-        // Synchronize with localStorage for admin editing fallback
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-        return data;
+  const baseInvitations = Array.isArray(publicInvitations) && publicInvitations.length > 0
+    ? (publicInvitations as Invitation[])
+    : seedInvitations;
+
+  // Server-side safety: return static base config immediately during SSR
+  if (typeof window === "undefined") {
+    return baseInvitations;
+  }
+
+  // Client-side: load from localStorage
+  if (typeof localStorage !== "undefined") {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      try {
+        return JSON.parse(stored) as Invitation[];
+      } catch (e) {
+        console.error("Failed to parse stored invitations:", e);
       }
     }
-  } catch (e) {
-    console.debug("No static invitations.json found, loading from storage/seed:", e);
   }
 
-  // 2. Try to get from localStorage
-  const stored = localStorage.getItem(STORAGE_KEY);
-  if (stored) {
+  // Client-side fallback: seed localStorage and return base
+  if (typeof localStorage !== "undefined") {
     try {
-      return JSON.parse(stored) as Invitation[];
-    } catch (e) {
-      console.error("Failed to parse stored invitations:", e);
-    }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(baseInvitations));
+    } catch (e) {}
   }
-
-  // 3. Fallback to seed data
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(seedInvitations));
-  return seedInvitations;
+  return baseInvitations;
 }
 
 export async function getInvitationBySlug(slug: string): Promise<Invitation | undefined> {
@@ -48,12 +49,20 @@ export async function saveInvitation(inv: Invitation): Promise<Invitation> {
   } else {
     updatedList = [inv, ...list];
   }
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedList));
+  if (typeof localStorage !== "undefined") {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedList));
+    } catch (e) {}
+  }
   return inv;
 }
 
 export async function deleteInvitation(id: string): Promise<void> {
   const list = await getInvitations();
   const updatedList = list.filter((i) => i.id !== id);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedList));
+  if (typeof localStorage !== "undefined") {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedList));
+    } catch (e) {}
+  }
 }
