@@ -13,7 +13,25 @@ export async function getInvitations(): Promise<Invitation[]> {
     return baseInvitations;
   }
 
-  // Client-side: load from localStorage
+  // Client-side: Dynamic fetch to stay in sync with server-side public/invitations.json edits
+  try {
+    const res = await fetch("/invitations.json");
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data) && data.length > 0) {
+        if (typeof localStorage !== "undefined") {
+          try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+          } catch (e) {}
+        }
+        return data;
+      }
+    }
+  } catch (e) {
+    console.debug("No static invitations.json found or fetch failed, using local storage:", e);
+  }
+
+  // Client-side fallback: load from localStorage
   if (typeof localStorage !== "undefined") {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
@@ -25,7 +43,7 @@ export async function getInvitations(): Promise<Invitation[]> {
     }
   }
 
-  // Client-side fallback: seed localStorage and return base
+  // Client-side deep fallback: seed localStorage and return base
   if (typeof localStorage !== "undefined") {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(baseInvitations));

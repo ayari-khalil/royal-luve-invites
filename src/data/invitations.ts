@@ -152,15 +152,15 @@ export const invitations: Invitation[] = [
     photoUrl: "https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&q=80",
     whatsappNumber: "21612345678",
     theme: "or",
-    template: "velours-rouge",
+    template: "rideau-soie",
     additionalDates: [
       {
         label: "عقد القران",
-        date: "2026-08-13"
+        date: "2026-08-13 16:00"
       },
       {
         label: "النبيته",
-        date: "2026-08-14"
+        date: "2026-08-14 21:00"
       }
     ],
     createdAt: "2026-07-27T15:00:00.000Z"
