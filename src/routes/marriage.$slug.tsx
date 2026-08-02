@@ -39,15 +39,15 @@ function EnvelopePage() {
   const [exiting, setExiting] = useState(false);
   const initials = `${inv.brideName[0]} و ${inv.groomName[0]}`;
 
-  // Redirect immediately if the template is rideau-imperial or velours-rouge
+  // Redirect immediately if the template is rideau-imperial, velours-rouge, porte-d-or, or rideau-soie
   useEffect(() => {
-    if (inv.template === "rideau-imperial" || inv.template === "velours-rouge") {
+    if (inv.template === "rideau-imperial" || inv.template === "velours-rouge" || inv.template === "porte-d-or" || inv.template === "rideau-soie") {
       navigate({ to: "/invitation/$slug", params: { slug: inv.slug }, replace: true });
     }
   }, [inv.template, inv.slug, navigate]);
 
   useEffect(() => {
-    if (inv.template === "rideau-imperial" || inv.template === "velours-rouge") return;
+    if (inv.template === "rideau-imperial" || inv.template === "velours-rouge" || inv.template === "porte-d-or" || inv.template === "rideau-soie") return;
     if (!opened) return;
     const t = setTimeout(() => setExiting(true), 1400);
     const n = setTimeout(() => {

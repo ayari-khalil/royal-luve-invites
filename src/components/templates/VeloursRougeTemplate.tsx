@@ -468,6 +468,13 @@ export function VeloursRougeTemplate({ inv }: { inv: Invitation }) {
           backdrop-filter: blur(12px);
           -webkit-backdrop-filter: blur(12px);
         }
+        @media (max-width: 768px) {
+          .glass-velvet {
+            background: rgba(28, 1, 6, 0.94);
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+          }
+        }
         .text-champagne-gradient {
           background: linear-gradient(135deg, #fff4d0 0%, #d4af37 40%, #f3e5b5 70%, #aa8010 100%);
           -webkit-background-clip: text;

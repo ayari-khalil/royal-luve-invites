@@ -245,10 +245,10 @@ export function ScrollReveal({
 }: ScrollRevealProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y, filter: "blur(4px)" }}
-      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      initial={{ opacity: 0, y }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once, margin: "-60px" }}
-      transitionEnd={{ filter: "none", transform: "none" }}
+      transitionEnd={{ transform: "none" }}
       transition={{
         duration: 0.9,
         delay,
@@ -416,12 +416,11 @@ export function StaggerChildren({
 }
 
 export const staggerItem = {
-  hidden: { opacity: 0, y: 24, filter: "blur(4px)" },
+  hidden: { opacity: 0, y: 24 },
   visible: {
     opacity: 1,
     y: 0,
-    filter: "blur(0px)",
     transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as const },
-    transitionEnd: { filter: "none", transform: "none" },
+    transitionEnd: { transform: "none" },
   },
 };

@@ -17,7 +17,7 @@ export type Invitation = {
   additionalDates?: { label: string; date: string }[];
 };
 
-export type TemplateId = "royal-or" | "noir-emeraude" | "jardin-rose" | "velours-rouge" | "rideau-imperial";
+export type TemplateId = "royal-or" | "noir-emeraude" | "jardin-rose" | "velours-rouge" | "rideau-imperial" | "porte-d-or" | "rideau-soie";
 
 export const TEMPLATES: {
   id: TemplateId;
@@ -65,6 +65,22 @@ export const TEMPLATES: {
       description:
         "ستائر مخملية حمراء غنية بتفاصيل ثلاثية الأبعاد وشرائط ذهبية ملكية، تنفتح مباشرة عند الدخول. تصميم فاخر وخطوط عربية عريضة وواضحة.",
       palette: ["#120104", "#420512", "#780c21", "#d4af37"],
+    },
+    {
+      id: "porte-d-or",
+      name: "البوابة الذهبية",
+      tagline: "فخامة المشربية العتيقة وبريق الذهب",
+      description:
+        "بوابة مشربية تقليدية تنفتح لتكشف عن تفاصيل ذهبية ساحرة وخلفية خضراء داكنة فاخرة، تجسد سحر الأصالة والجمال العربي.",
+      palette: ["#071C18", "#0D2B26", "#123D36", "#C9A24B"],
+    },
+    {
+      id: "rideau-soie",
+      name: "ستار الحرير",
+      tagline: "انسيابية الحرير بنغمات الورد والذهب الوردي",
+      description:
+        "ستائر حريرية ناعمة بنغمات وردية دافئة وذهب وردي تنفتح بحركة ثلاثية الأبعاد انسيابية لتكشف عن بطاقة الدعوة.",
+      palette: ["#2B0713", "#6B1836", "#F6D9DE", "#D9A66C"],
     },
   ];
 
