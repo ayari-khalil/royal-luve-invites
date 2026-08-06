@@ -534,7 +534,7 @@ export function RideauSoieTemplate({ inv }: { inv: Invitation }) {
                                 month: "long",
                                 year: "numeric",
                             });
-                            const t = d.toLocaleTimeString("ar-TN", { hour: "2-digit", minute: "2-digit" });
+                            const t = item.timeLabel || d.toLocaleTimeString("ar-TN", { hour: "2-digit", minute: "2-digit" });
                             return (
                                 <HoverLift key={idx}>
                                     <div className="panel h-full rounded-3xl p-7 md:p-8 text-center border border-[#D9A66C]/30 shadow-[0_15px_35px_rgba(0,0,0,0.3)]">
@@ -546,6 +546,9 @@ export function RideauSoieTemplate({ inv }: { inv: Invitation }) {
                                         </p>
                                         <div className="rule w-16 mx-auto my-3.5" />
                                         <p className="text-[#D9A66C]/85 text-sm md:text-base font-[family-name:var(--font-serif)]">{t}</p>
+                                        {item.venue && (
+                                            <p className="mt-1 text-[#D9A66C]/85 text-sm md:text-base font-[family-name:var(--font-serif)]">{item.venue}</p>
+                                        )}
                                     </div>
                                 </HoverLift>
                             );

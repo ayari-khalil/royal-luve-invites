@@ -14,7 +14,7 @@ export type Invitation = {
   theme: "or" | "rose" | "noir";
   template: TemplateId;
   createdAt: string;
-  additionalDates?: { label: string; date: string }[];
+  additionalDates?: { label: string; date: string; timeLabel?: string; venue?: string }[];
 };
 
 export type TemplateId = "royal-or" | "noir-emeraude" | "jardin-rose" | "velours-rouge" | "rideau-imperial" | "porte-d-or" | "rideau-soie";
@@ -157,7 +157,9 @@ export const invitations: Invitation[] = [
     additionalDates: [
       {
         label: "عقد القران",
-        date: "2026-08-13 16:00"
+        date: "2026-08-13 16:00",
+        timeLabel: "بعد صلاة العصر",
+        venue: "جامع الرحمة العالية"
       },
       {
         label: "النبيته",
